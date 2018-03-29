@@ -5,12 +5,12 @@ public class Customer {
 	private int isAdmin;
 	private String firstName;
 	private String lastName;
-        private String addr;
-        private String zip;
-        private String state;
-        private String id;
-        private String pw;
-        private String email;
+    private String addr;
+    private String zip;
+    private String state;
+    private String id;
+    private String pw;
+    private String email;
 	private String ssn;
 	private String securityQue;
 	private String securityAns;
