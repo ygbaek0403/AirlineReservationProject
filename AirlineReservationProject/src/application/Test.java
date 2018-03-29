@@ -7,11 +7,15 @@ public class Test {
 
 	public static void main(String[] args) {
 	
+		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
+		String id = "root";
+		String pw = "iin";
+		
 		Connection conn = null;
 		
 		try {
 			
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbo_airline", "root", "iin");
+			conn = DriverManager.getConnection(url, id, pw);
 			
 			Statement stmt = conn.createStatement();
 			
