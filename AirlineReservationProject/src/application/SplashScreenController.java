@@ -41,7 +41,7 @@ public class SplashScreenController extends StackPane {
     public SplashScreenController() {
 
 	// ------------------------------------FXMLLOADER
-	FXMLLoader loader = new FXMLLoader(getClass().getResource("SplashScreenController.fxml"));
+	FXMLLoader loader = new FXMLLoader(getClass().getResource("SplashScreen.fxml"));
 	loader.setController(this);
 	loader.setRoot(this);
 

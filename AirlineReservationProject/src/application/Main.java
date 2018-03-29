@@ -45,46 +45,45 @@ public class Main extends Application {
 	private static Stage primaryStage;
 	private static BorderPane mainLayout;
 
-	 @Override
-	    public void start(Stage primaryStage) throws IOException {
-	    	this.primaryStage = primaryStage;
-	    	this.primaryStage.setTitle("Airline Reservation Application");
-	    	showMainView();
-	    	
-		
-		//Show the SplashScreen
-		spashScreen.showWindow();
-
-		//I am using the code below so the Primary Stage of the application 
-		//doesn't appear for 2 seconds , so the splash screen is displayed
-		PauseTransition splashScreenDelay = new PauseTransition(Duration.seconds(3));
-		splashScreenDelay.setOnFinished(f -> {
-		    primaryStage.show();
-		    spashScreen.hideWindow();
-		});
-		splashScreenDelay.playFromStart();
-	    }
+	
 	 
-	    private static void showMainView() throws IOException {
-    		FXMLLoader loader = new FXMLLoader();
-    		loader.setLocation(Main.class.getResource("view/MainView.fxml"));
-    		mainLayout = loader.load();
-    		Scene scene = new Scene(mainLayout);
-    		primaryStage.setScene(scene);
+	private static void showMainView() throws IOException {
+    	FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(Main.class.getResource("MainView.fxml"));
+    	mainLayout = loader.load();
+    	Scene scene = new Scene(mainLayout);
+    	primaryStage.setScene(scene);
+
+		primaryStage.show();
 
     		
 
     }
 	 
 	@Override
-	public void start2(Stage primaryStage) {
+	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Main.fxml"));
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
+			
+		  		    	
+			
+			//Show the SplashScreen
+		   	spashScreen.showWindow();
+
+			//I am using the code below so the Primary Stage of the application 
+			//doesn't appear for 2 seconds , so the splash screen is displayed
+		   	PauseTransition splashScreenDelay = new PauseTransition(Duration.seconds(3));
+		   	splashScreenDelay.setOnFinished(f -> {
+		   		primaryStage.show();
+		   		spashScreen.hideWindow();
+		   	});
+		   	
+		   	splashScreenDelay.playFromStart();
+		   	
+			Main.primaryStage = primaryStage;
+		   	Main.primaryStage.setTitle("Airline Reservation Application");
+		   	showMainView();
+
+				} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
