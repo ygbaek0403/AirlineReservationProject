@@ -23,7 +23,7 @@
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin></Label>
-            <TextField prefWidth="114.0">
+            <TextField fx:id="username" prefWidth="114.0">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></TextField>
@@ -31,15 +31,15 @@
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></Label>
-            <PasswordField prefWidth="113.0">
+            <PasswordField fx:id="password" prefWidth="114.0">
                <HBox.margin>
-                  <Insets right="5.0" />
+                  <Insets right="6.0" />
                </HBox.margin></PasswordField>
             <Button mnemonicParsing="false" text="Login">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></Button>
-            <Button mnemonicParsing="false" text="Sign Up">
+            <Button mnemonicParsing="false" onAction="#goSignup" text="Sign up">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>

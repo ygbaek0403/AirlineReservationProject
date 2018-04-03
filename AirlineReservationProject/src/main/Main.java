@@ -31,7 +31,7 @@ public class Main extends Application {
 	
     	spashScreen.showWindow();
 
-    	PauseTransition splashScreenDelay = new PauseTransition(Duration.seconds(3));
+    	PauseTransition splashScreenDelay = new PauseTransition(Duration.seconds(1));
     	splashScreenDelay.setOnFinished(f -> {
     		primaryStage.show();
     		spashScreen.hideWindow();
@@ -58,6 +58,7 @@ public class Main extends Application {
 
     
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
 
