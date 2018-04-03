@@ -33,11 +33,11 @@ public class Customer {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getAddr() {
-		return addr;
+	public String getAddress() {
+		return address;
 	}
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getZip() {
 		return zip;
@@ -51,17 +51,17 @@ public class Customer {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getId() {
-		return id;
+	public String getUsername() {
+		return username;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getPw() {
-		return pw;
+	public String getPassword() {
+		return password;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getEmail() {
 		return email;
