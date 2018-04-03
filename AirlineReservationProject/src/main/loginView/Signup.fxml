@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -37,12 +38,12 @@
             </HBox>
             <HBox prefHeight="11.0" prefWidth="335.0">
                <children>
-                  <TextField fx:id="firstName">
+                  <TextField fx:id="firstNameTF">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="lastName" />
+                  <TextField fx:id="lastNameTF" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -53,7 +54,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="address" prefHeight="27.0" prefWidth="292.0">
+            <TextField fx:id="addressTF" prefHeight="27.0" prefWidth="292.0">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
@@ -73,12 +74,12 @@
             </HBox>
             <HBox prefHeight="4.0" prefWidth="335.0">
                <children>
-                  <TextField fx:id="zip">
+                  <TextField fx:id="zipTF">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="state" />
+                  <TextField fx:id="stateTF" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -99,12 +100,12 @@
             </HBox>
             <HBox prefHeight="28.0" prefWidth="335.0">
                <children>
-                  <TextField fx:id="username">
+                  <TextField fx:id="usernameTF">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="password" />
+                  <PasswordField fx:id="passwordPF" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -115,7 +116,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="email">
+            <TextField fx:id="emailTF">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
@@ -125,7 +126,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="ssn">
+            <TextField fx:id="ssnTF">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
@@ -135,7 +136,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="securityQue">
+            <TextField fx:id="securityQueTF">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
@@ -145,7 +146,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="securityAns" />
+            <TextField fx:id="securityAnsTF" />
          </children>
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" />

@@ -14,6 +14,7 @@ public class Customer {
 	private String ssn;
 	private String securityQue;
 	private String securityAns;
+
 	
 	public int getIsAdmin() {
 		return isAdmin;
