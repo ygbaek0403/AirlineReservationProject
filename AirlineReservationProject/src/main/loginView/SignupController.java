@@ -49,26 +49,44 @@ public class SignupController {
 		String ssn = ssnTF.getText();
 		String securityQue = securityQueTF.getText();
 		String securityAns = securityAnsTF.getText();
+<<<<<<< HEAD
 				
+=======
+		
+		
+>>>>>>> refs/remotes/origin/master
 		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
 		String id = "root";
 		String pw = "iin";
 		
 		Connection conn = null;
 
+<<<<<<< HEAD
+=======
+		
+
+>>>>>>> refs/remotes/origin/master
 		try {
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			Statement stmt = conn.createStatement();
 			String query = "INSERT INTO `dbo_airline`.`customers` (`isadmin`, `firstname`, `lastname`, `addr`, `zip`, `state`, `id`, `pw`, `email`, `ssn`, `securityque`, `securityans`) "
+<<<<<<< HEAD
 					+ "VALUES ('" + isAdmin + "', '" + firstName + "', '" + lastName + "', '" + address + "', '" + zip + "', '" + state + "', '" + username + "', '" + password + "', '" + email + "', '" + ssn + "', '" +  securityQue + "', '" + securityAns + "')";
+=======
+					+ "VALUES (" + isAdmin + ", '" + firstName + "', '" + lastName + "', '" + address + "', '" + zip + "', '" + state + "', '" + username + "', '" + password + "', '" + email + "', '" + ssn + "', '" +  securityQue + "', '" + securityAns + "')";
+>>>>>>> refs/remotes/origin/master
 			
 			stmt.executeUpdate(query);
 			
 			conn.close();
 			
+<<<<<<< HEAD
 			} catch (Exception e) {
+=======
+		} catch (Exception e) {
+>>>>>>> refs/remotes/origin/master
 			
 			e.printStackTrace();
 			
