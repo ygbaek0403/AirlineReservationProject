@@ -14,16 +14,18 @@ public class Test {
 		Connection conn = null;
 		
 		try {
-			
+			String username = "a";
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			Statement stmt = conn.createStatement();
+			String query = "select * from customers where username = '" + username + "'";
+			ResultSet rs = stmt.executeQuery(query);
 			
-			ResultSet rs = stmt.executeQuery("select * from customers");
+			rs.next();
+			System.out.println(rs.getString("firstname") + rs.getString("lastname"));
 			
 			while (rs.next()) {
-				System.out.println(rs.getString("firstname") + rs.getString("lastname"));
-				
+			
 			}
 		} catch (Exception e) {
 			

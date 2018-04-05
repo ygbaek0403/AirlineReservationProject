@@ -44,7 +44,7 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Password?">
+            <Button mnemonicParsing="false" onAction="#goFindPassword" text="Password?">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>

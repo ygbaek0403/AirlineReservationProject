@@ -85,4 +85,19 @@ public class LoginController {
 	}
 	
 
+	@FXML
+	private void goFindPassword() throws IOException {
+		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("loginView/FindPassword.fxml"));
+		BorderPane register = loader.load();
+		
+		Stage addDialogStage = new Stage();
+		addDialogStage.setTitle("Find Password");
+		addDialogStage.initModality(Modality.WINDOW_MODAL);
+		addDialogStage.initOwner(primaryStage);
+		Scene scene = new Scene(register);
+		addDialogStage.setScene(scene);
+		addDialogStage.showAndWait();
+	}
 }

@@ -35,7 +35,7 @@ public class SignupController {
 	
 	
 	@FXML
-	private void goSignup() throws IOException {
+	private void goSubmit() throws IOException {
 		
 		String isAdmin = "1";
 		String firstName = firstNameTF.getText();
@@ -61,7 +61,7 @@ public class SignupController {
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			Statement stmt = conn.createStatement();
-			String query = "INSERT INTO `dbo_airline`.`customers` (`isadmin`, `firstname`, `lastname`, `addr`, `zip`, `state`, `id`, `pw`, `email`, `ssn`, `securityque`, `securityans`) "
+			String query = "INSERT INTO `dbo_airline`.`customers` (`isadmin`, `firstname`, `lastname`, `address`, `zip`, `state`, `username`, `password`, `email`, `ssn`, `securityque`, `securityans`) "
 					+ "VALUES ('" + isAdmin + "', '" + firstName + "', '" + lastName + "', '" + address + "', '" + zip + "', '" + state + "', '" + username + "', '" + password + "', '" + email + "', '" + ssn + "', '" +  securityQue + "', '" + securityAns + "')";
 			
 			stmt.executeUpdate(query);
