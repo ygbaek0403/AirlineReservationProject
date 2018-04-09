@@ -1,6 +1,9 @@
 package classes;
 
-public class Customer {
+import java.util.ArrayList;
+
+
+public class Customer implements Comparable<Customer> {
 
 	private int isAdmin;
 	private String firstName;
@@ -14,7 +17,11 @@ public class Customer {
 	private String ssn;
 	private String securityQue;
 	private String securityAns;
-
+	
+	
+	// Generics --> shifts the issue from runtime to compile time
+	ArrayList<Customer> list = new ArrayList<Customer>();
+	
 	
 	public int getIsAdmin() {
 		return isAdmin;
@@ -87,6 +94,16 @@ public class Customer {
 	}
 	public void setSecurityAns(String securityAns) {
 		this.securityAns = securityAns;
+	}
+	
+	@Override
+	public int compareTo(Customer o) {
+		
+		if(o.ssn.equalsIgnoreCase(this.ssn)) {
+			return 0;
+		} 
+		
+		return -1;
 	}
 	
 }

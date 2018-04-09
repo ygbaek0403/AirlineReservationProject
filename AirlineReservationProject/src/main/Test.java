@@ -1,12 +1,20 @@
 package main;
 
-import java.sql.*;                                         
+import java.sql.*;
+import java.util.ArrayList;                                         
 
-//test
 public class Test {
 
 	public static void main(String[] args) {
 	
+		
+		ArrayList list = new ArrayList();
+		list.add("hello");
+		
+		System.out.println(list.size());
+		System.out.println(list.get(0));
+		
+		
 		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
 		String id = "root";
 		String pw = "iin";

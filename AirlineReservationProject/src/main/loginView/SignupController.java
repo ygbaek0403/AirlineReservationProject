@@ -2,8 +2,11 @@ package main.loginView;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+
 import java.sql.*;  
 
 public class SignupController {
@@ -66,12 +69,17 @@ public class SignupController {
 			
 			stmt.executeUpdate(query);
 			
+			
 			conn.close();
 		
 			} catch (Exception e) {
 			
 			e.printStackTrace();
-			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Check your fields.");
+			alert.showAndWait();
 		} 
 		
 		

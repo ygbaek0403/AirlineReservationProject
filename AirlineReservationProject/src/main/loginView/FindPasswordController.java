@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -23,7 +26,6 @@ public class FindPasswordController {
 	private void goFind() throws IOException {
 		
 		String username = usernameTF.getText();
-		String securityAns = securityAnsTF.getText();
 		String securityQue;
 
 		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
@@ -47,26 +49,29 @@ public class FindPasswordController {
 				
 				securityQue = rs.getString("securityQue");
 				securityQueLB.setText(securityQue);
-				System.out.println(rs.getString("username") + "  " + username);	
-			}
+				conn.close();
+				
+			}		
 			
-			conn.close();
 		
-			} catch (Exception e) {
+		} catch (Exception e) {
 			
 			e.printStackTrace();
-			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Check your username.");
+			alert.showAndWait();
 		} 	
 	}
     
-/*
+
 	@FXML
 	private void goSubmit() throws IOException {
 		
 		String username = usernameTF.getText();
 		String securityAns = securityAnsTF.getText();
-		String securityQue;
-
+	
 		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
 		String id = "root";
 		String pw = "iin";
@@ -84,20 +89,35 @@ public class FindPasswordController {
 			
 			rs.next();
 			
-			if (username.equals(rs.getString("username"))) {
+			if (securityAns.equals(rs.getString("securityAns"))) {
 				
-				securityQue = rs.getString("securityQue");
-				securityQueLB.setText(securityQue);
-				System.out.println(rs.getString("username") + "  " + username);	
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("Your password: " + rs.getString("securityAns"));
+				alert.showAndWait();
+				conn.close();
+				
+			} else {
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("Check your security answer.");
+				alert.showAndWait();
+				
 			}
 			
-			conn.close();
 		
-			} catch (Exception e) {
+		} catch (Exception e) {
 			
 			e.printStackTrace();
-			
-		} 	
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Check your security answer.");
+			alert.showAndWait();
+		} 	 	
 	}
-*/	
+
 }
