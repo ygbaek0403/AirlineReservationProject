@@ -64,15 +64,35 @@ public class SignupController {
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			Statement stmt = conn.createStatement();
-			String query = "INSERT INTO `dbo_airline`.`customers` (`isadmin`, `firstname`, `lastname`, `address`, `zip`, `state`, `username`, `password`, `email`, `ssn`, `securityque`, `securityans`) "
-					+ "VALUES ('" + isAdmin + "', '" + firstName + "', '" + lastName + "', '" + address + "', '" + zip + "', '" + state + "', '" + username + "', '" + password + "', '" + email + "', '" + ssn + "', '" +  securityQue + "', '" + securityAns + "')";
+			String query = "select * from customers";
+			ResultSet rs = stmt.executeQuery(query);
 			
-			stmt.executeUpdate(query);
-			
-			
-			conn.close();
-		
-			} catch (Exception e) {
+			if(isDuplicate(rs, username, ssn) == false) {
+				
+				if (username.isEmpty() || password.isEmpty() || ssn.isEmpty() || securityQue.isEmpty() || securityAns.isEmpty()) {
+					
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Check your fields.");
+					alert.showAndWait();
+					
+				} else {
+					
+					String queryInsert = "INSERT INTO `dbo_airline`.`customers` (`isadmin`, `firstname`, `lastname`, `address`, `zip`, `state`, `username`, `password`, `email`, `ssn`, `securityque`, `securityans`) "
+							+ "VALUES ('" + isAdmin + "', '" + firstName + "', '" + lastName + "', '" + address + "', '" + zip + "', '" + state + "', '" + username + "', '" + password + "', '" + email + "', '" + ssn + "', '" +  securityQue + "', '" + securityAns + "')";
+					
+					stmt.executeUpdate(queryInsert);
+					conn.close();
+					
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("You are succefully registered");
+					alert.showAndWait();
+				}
+			}
+		} catch (Exception e) {
 			
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -83,5 +103,47 @@ public class SignupController {
 		} 
 		
 		
+	}
+	
+	public boolean isDuplicate(ResultSet rs, String username, String ssn) {
+		
+		try {
+			
+			while (rs.next()) {
+				
+				if(username.equals(rs.getString("username"))) {
+					
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Your username is already exist");
+					alert.showAndWait();
+					return true;
+					
+				} else if(ssn.equals("\\d{3}-?\\d{2}-?\\d{4}")){
+					
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Your ssn is not correct");
+					alert.showAndWait();
+					return true;
+					
+				}else if (ssn.equals(rs.getString("ssn"))) {
+					
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Your ssn is already exist");
+					alert.showAndWait();
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

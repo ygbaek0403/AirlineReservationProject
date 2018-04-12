@@ -8,7 +8,6 @@ import java.sql.Statement;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -94,7 +93,7 @@ public class FindPasswordController {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText(null);
-				alert.setContentText("Your password: " + rs.getString("securityAns"));
+				alert.setContentText("Your password: " + rs.getString("password"));
 				alert.showAndWait();
 				conn.close();
 				

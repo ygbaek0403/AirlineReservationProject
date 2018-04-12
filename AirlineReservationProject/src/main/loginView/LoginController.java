@@ -4,13 +4,16 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.Main;
 import java.sql.*;  
+
 
 public class LoginController {
 
@@ -37,33 +40,66 @@ public class LoginController {
 		
 		Connection conn = null;
 
+		
+		
 		try {
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			Statement stmt = conn.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("select pw from customers where id = '" + username + "'");
+			ResultSet rs = stmt.executeQuery("select * from customers where username = '" + username + "'");
 			
-			if (password.equals(rs.getString(0)))
-				System.out.print("Wrong password");
+			rs.next();
 			
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("loginView/Signup.fxml"));
-			BorderPane register = loader.load();
-			
-			Stage addDialogStage = new Stage();
-			addDialogStage.setTitle("Sigh up");
-			addDialogStage.initModality(Modality.WINDOW_MODAL);
-			addDialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(register);
-			addDialogStage.setScene(scene);
-			addDialogStage.showAndWait();
+			if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 0) {
+				
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
+				BorderPane register = loader.load();
+				
+				Stage addDialogStage = new Stage();
+				addDialogStage.setTitle("Admin View");
+				addDialogStage.initModality(Modality.WINDOW_MODAL);
+				addDialogStage.initOwner(primaryStage);
+				Scene scene = new Scene(register);
+				addDialogStage.setScene(scene);
+				addDialogStage.showAndWait();
+				
+			} else if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 1) {
+				
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("mainView/UserView.fxml"));
+				BorderPane register = loader.load();
+				
+				Stage addDialogStage = new Stage();
+				addDialogStage.setTitle("User View");
+				addDialogStage.initModality(Modality.WINDOW_MODAL);
+				addDialogStage.initOwner(primaryStage);
+				Scene scene = new Scene(register);
+				addDialogStage.setScene(scene);
+				addDialogStage.showAndWait();
+				
+			} else {
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("Incorrect username or password");
+				alert.showAndWait();
+
+			}
+
 			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
-			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Incorrect username or password");
+			alert.showAndWait();
+
 		} 	
 	}
 	
