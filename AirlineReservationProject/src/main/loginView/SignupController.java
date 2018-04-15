@@ -11,6 +11,7 @@ import java.sql.*;
 
 public class SignupController {
 
+	private PreparedStatement pstmt;
 	@FXML
 	private TextField firstNameTF;
 	@FXML
@@ -38,7 +39,7 @@ public class SignupController {
 	
 	
 	@FXML
-	private void goSubmit() throws IOException {
+	private void goSubmit() throws IOException, SQLException {
 		
 		String isAdmin = "1";
 		String firstName = firstNameTF.getText();
@@ -62,9 +63,8 @@ public class SignupController {
 		try {
 			
 			conn = DriverManager.getConnection(url, id, pw);
-			
 			Statement stmt = conn.createStatement();
-			String query = "select * from customers";
+			String query = "select username, ssn from customers";
 			ResultSet rs = stmt.executeQuery(query);
 			
 			if(isDuplicate(rs, username, ssn) == false) {
@@ -79,10 +79,21 @@ public class SignupController {
 					
 				} else {
 					
-					String queryInsert = "INSERT INTO `dbo_airline`.`customers` (`isadmin`, `firstname`, `lastname`, `address`, `zip`, `state`, `username`, `password`, `email`, `ssn`, `securityque`, `securityans`) "
-							+ "VALUES ('" + isAdmin + "', '" + firstName + "', '" + lastName + "', '" + address + "', '" + zip + "', '" + state + "', '" + username + "', '" + password + "', '" + email + "', '" + ssn + "', '" +  securityQue + "', '" + securityAns + "')";
-					
-					stmt.executeUpdate(queryInsert);
+					String queryInsert = "INSERT INTO `dbo_airline`.`customers` (`isadmin`, `firstname`, `lastname`, `address`, `zip`, `state`, `username`, `password`, `email`, `ssn`, `securityque`, `securityans`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					pstmt = conn.prepareStatement(queryInsert);
+					pstmt.setString(1, isAdmin);
+					pstmt.setString(2, firstName);
+					pstmt.setString(3, lastName);
+					pstmt.setString(4, address);
+					pstmt.setString(5, zip);
+					pstmt.setString(6, state);
+					pstmt.setString(7, username);
+					pstmt.setString(8, password);
+					pstmt.setString(9, email);
+					pstmt.setString(10, ssn);
+					pstmt.setString(11, securityQue);
+					pstmt.setString(12, securityAns);
+					pstmt.executeUpdate();
 					conn.close();
 					
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -92,15 +103,21 @@ public class SignupController {
 					alert.showAndWait();
 				}
 			}
-		} catch (Exception e) {
 			
+		} catch (Exception e) {
+
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your fields.");
 			alert.showAndWait();
-		} 
+			
+		} finally {
+			
+			conn.close();
+		}
 		
 		
 	}
@@ -140,10 +157,21 @@ public class SignupController {
 				}
 			}
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+
+			System.out.println(e.getMessage());
+		
+		} 
 		
 		return false;
 	}
+	
+	/*
+	public boolean isSsn() {
+		
+	}
+	
+	public boolean isEamil() {
+		
+	}
+	 */
 }

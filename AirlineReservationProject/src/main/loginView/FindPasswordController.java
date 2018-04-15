@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -22,7 +23,7 @@ public class FindPasswordController {
 	
 	
 	@FXML
-	private void goFind() throws IOException {
+	private void goFind() throws IOException, SQLException {
 		
 		String username = usernameTF.getText();
 		String securityQue;
@@ -47,26 +48,28 @@ public class FindPasswordController {
 			if (username.equals(rs.getString("username"))) {
 				
 				securityQue = rs.getString("securityQue");
-				securityQueLB.setText(securityQue);
-				conn.close();
-				
+				securityQueLB.setText(securityQue);				
 			}		
 			
 		
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your username.");
 			alert.showAndWait();
-		} 	
+			
+		} finally {
+			
+			conn.close();
+		}
 	}
     
 
 	@FXML
-	private void goSubmit() throws IOException {
+	private void goSubmit() throws IOException, SQLException {
 		
 		String username = usernameTF.getText();
 		String securityAns = securityAnsTF.getText();
@@ -95,8 +98,7 @@ public class FindPasswordController {
 				alert.setHeaderText(null);
 				alert.setContentText("Your password: " + rs.getString("password"));
 				alert.showAndWait();
-				conn.close();
-				
+								
 			} else {
 				
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -110,13 +112,17 @@ public class FindPasswordController {
 		
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your security answer.");
 			alert.showAndWait();
-		} 	 	
+		
+		} finally {
+			
+			conn.close();
+		}
 	}
 
 }

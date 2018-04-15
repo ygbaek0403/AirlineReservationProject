@@ -27,12 +27,6 @@ public class SplashScreenController extends StackPane {
 
     // -------------------------------------------------------------
 
-    /** The logger. */
-    private Logger logger = Logger.getLogger(getClass().getName());
-
-    /**
-     * The Window of the Splash Screen
-     */
     Stage window = new Stage();
 
     /**
@@ -48,7 +42,7 @@ public class SplashScreenController extends StackPane {
 	try {
 	    loader.load();
 	} catch (IOException ex) {
-	    logger.log(Level.SEVERE, "", ex);
+	
 	}
 
 	//Window

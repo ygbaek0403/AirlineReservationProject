@@ -29,7 +29,7 @@ public class LoginController {
 	
 	
 	@FXML
-	private void goLogin() throws IOException {
+	private void goLogin() throws IOException, SQLException {
 		
 		String username = usernameTF.getText();
 		String password = passwordPF.getText();
@@ -56,13 +56,13 @@ public class LoginController {
 				
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
-				BorderPane register = loader.load();
+				mainLayout = loader.load();
 				
 				Stage addDialogStage = new Stage();
 				addDialogStage.setTitle("Admin View");
 				addDialogStage.initModality(Modality.WINDOW_MODAL);
 				addDialogStage.initOwner(primaryStage);
-				Scene scene = new Scene(register);
+				Scene scene = new Scene(mainLayout);
 				addDialogStage.setScene(scene);
 				addDialogStage.showAndWait();
 				
@@ -70,13 +70,13 @@ public class LoginController {
 				
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("mainView/UserView.fxml"));
-				BorderPane register = loader.load();
+				mainLayout = loader.load();
 				
 				Stage addDialogStage = new Stage();
 				addDialogStage.setTitle("User View");
 				addDialogStage.initModality(Modality.WINDOW_MODAL);
 				addDialogStage.initOwner(primaryStage);
-				Scene scene = new Scene(register);
+				Scene scene = new Scene(mainLayout);
 				addDialogStage.setScene(scene);
 				addDialogStage.showAndWait();
 				
@@ -92,15 +92,18 @@ public class LoginController {
 
 			
 		} catch (Exception e) {
-			
-			e.printStackTrace();
+
+			System.out.println(e.getMessage());
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Incorrect username or password");
 			alert.showAndWait();
 
-		} 	
+		} finally {
+			
+			conn.close();
+		}
 	}
 	
 	
@@ -109,13 +112,13 @@ public class LoginController {
 		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("loginView/Signup.fxml"));
-		BorderPane register = loader.load();
+		mainLayout = loader.load();
 		
 		Stage addDialogStage = new Stage();
 		addDialogStage.setTitle("Sigh up");
 		addDialogStage.initModality(Modality.WINDOW_MODAL);
 		addDialogStage.initOwner(primaryStage);
-		Scene scene = new Scene(register);
+		Scene scene = new Scene(mainLayout);
 		addDialogStage.setScene(scene);
 		addDialogStage.showAndWait();
 	}
@@ -126,13 +129,13 @@ public class LoginController {
 		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("loginView/FindPassword.fxml"));
-		BorderPane register = loader.load();
+		mainLayout = loader.load();
 		
 		Stage addDialogStage = new Stage();
 		addDialogStage.setTitle("Find Password");
 		addDialogStage.initModality(Modality.WINDOW_MODAL);
 		addDialogStage.initOwner(primaryStage);
-		Scene scene = new Scene(register);
+		Scene scene = new Scene(mainLayout);
 		addDialogStage.setScene(scene);
 		addDialogStage.showAndWait();
 	}

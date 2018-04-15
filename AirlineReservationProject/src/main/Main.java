@@ -21,7 +21,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
     	Main.primaryStage = primaryStage;
     	Main.primaryStage.setTitle("Airline Reservation Application");
     	
@@ -36,7 +36,12 @@ public class Main extends Application {
     	
     	splashScreenDelay.playFromStart();
     	
-    	showLoginView();
+    	try {
+			showLoginView();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     }
 
