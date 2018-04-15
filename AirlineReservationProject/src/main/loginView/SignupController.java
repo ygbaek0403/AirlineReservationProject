@@ -165,13 +165,49 @@ public class SignupController {
 		return false;
 	}
 	
-	/*
-	public boolean isSsn() {
+	
+	public boolean isSsn(String ssnNum) {
+		int len = ssnNum.length();
 		
+		if(len != 9) {
+			errdef = "Number of digits not matching for SSN";
+			return false;
+		}
+		
+		if (ssnNum.startsWith("000") || ssnNum.startsWith("666") ||
+				ssnNum.startsWith("9") || ssnNum.endsWith("0000") ||
+				ssnNum.startsWith("00",3)) {
+			errdef = "Invalid digits for SSN";
+			return false;
+		}
+		
+		try {
+			for (int i=0; i < strlen; i++) 
+				 Integer.parseInt(String.valueOf(ssnnumber.charAt(i)));
+		} catch (Exception e) {
+			errdef = "Non Digit Values for SSN";
+			return false;
+		}
+		errdef = "The SSN is valid";
+		return true;
 	}
 	
-	public boolean isEamil() {
+	public boolean isEamil(String[] emailChar) {
+		final String EMAIL_PATTERN =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+			 
+		  Matcher matcher = pattern.matcher(emailChar);
+		  if (matcher.matches() == false) {
+			  errdef = "Unable to read email";
+			  return false;
+		  }
+			  
+		errdef = "The email is valid";
+		return true;
 		
 	}
-	 */
+
+
 }
