@@ -14,10 +14,60 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+      <left>
+      <VBox alignment="CENTER" prefHeight="550.0" prefWidth="156.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Flying from">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="flyingFromTF">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Flying to">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="flyingToTF">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Departing">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <DatePicker fx:id="departDateDP">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </DatePicker>
+            <Label text="Returning">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <DatePicker fx:id="returnDateDP">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </DatePicker>
+            <Button alignment="CENTER" mnemonicParsing="false" text="Search" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
    <top>
       <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button mnemonicParsing="false" text="Logout" />
+            <Button mnemonicParsing="false" text="Logout" />
             <Button mnemonicParsing="false" text="My trips" />
         </items>
          <opaqueInsets>
@@ -68,54 +118,4 @@
          </BorderPane.margin>
       </VBox>
    </center>
-   <left>
-      <VBox alignment="CENTER" prefHeight="550.0" prefWidth="156.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Flying from">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="flyingFromTF">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </TextField>
-            <Label text="Flying to">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="flyingToTF">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </TextField>
-            <Label text="Departing">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Label>
-            <DatePicker fx:id="departDateDP">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </DatePicker>
-            <Label text="Returning">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Label>
-            <DatePicker fx:id="returnDateDP">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </DatePicker>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Search" />
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </VBox>
-   </left>
 </BorderPane>

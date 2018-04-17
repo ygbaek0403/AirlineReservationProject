@@ -14,76 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainView.AdminViewController">
-   <top>
-      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
-          <Button mnemonicParsing="false" onAction="#goLogout" text="Logout" />
-            <Button mnemonicParsing="false" text="My trips" />
-        </items>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </ToolBar>
-   </top>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Select your departure to">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <TableView fx:id="flightTable" prefHeight="552.0" prefWidth="890.0">
-              <columns>
-                <TableColumn fx:id="flightNumber" prefWidth="51.0" text="Flight" />
-                <TableColumn fx:id="departureCity" prefWidth="100.0" text="Departure City" />
-                  <TableColumn fx:id="departureState" prefWidth="50.0" text="State" />
-                  <TableColumn fx:id="arrivalCity" prefWidth="100.0" text="Arrival City" />
-                  <TableColumn fx:id="arrivalState" minWidth="0.0" prefWidth="50.0" text="State" />
-                  <TableColumn fx:id="departureDate" minWidth="4.0" prefWidth="105.0" text="Departure Date" />
-                  <TableColumn fx:id="departureTime" minWidth="4.0" prefWidth="61.0" text="Time" />
-                  <TableColumn fx:id="arrivalDate" minWidth="0.0" prefWidth="105.0" text="Arrival Date" />
-                  <TableColumn fx:id="arrivalTime" minWidth="0.0" prefWidth="61.0" text="Time" />
-                  <TableColumn fx:id="duration" minWidth="9.0" prefWidth="60.0" text="Duration" />
-                  <TableColumn fx:id="capacity" minWidth="0.0" prefWidth="60.0" text="Capacity" />
-              </columns>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </TableView>
-            <HBox alignment="TOP_RIGHT" prefHeight="0.0" prefWidth="990.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#addFlight" text="Add a Flight">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" text="Modify">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" text="Delete">
-                     <HBox.margin>
-                        <Insets right="462.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" text="Add to my flights" />
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </VBox>
-   </center>
-   <left>
+      <left>
       <VBox alignment="CENTER" prefHeight="550.0" prefWidth="156.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Flying from">
@@ -133,4 +64,73 @@
          </BorderPane.margin>
       </VBox>
    </left>
+   <top>
+      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+    	    <Button mnemonicParsing="false" onAction="#goLogout" text="Logout" />
+	        <Button mnemonicParsing="false" text="My trips" />
+        </items>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ToolBar>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Select your departure to">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="flightTable" prefHeight="552.0" prefWidth="890.0">
+              <columns>
+                <TableColumn fx:id="flightNumberColumn" prefWidth="51.0" text="Flight" />
+                <TableColumn fx:id="departureCityColumn" prefWidth="100.0" text="Departure City" />
+                  <TableColumn fx:id="departureStateColumn" prefWidth="50.0" text="State" />
+                  <TableColumn fx:id="arrivalCityColumn" prefWidth="100.0" text="Arrival City" />
+                  <TableColumn fx:id="arrivalStateColumn" minWidth="0.0" prefWidth="50.0" text="State" />
+                  <TableColumn fx:id="departureDateColumn" minWidth="4.0" prefWidth="105.0" text="Departure Date" />
+                  <TableColumn fx:id="departureTimeColumn" minWidth="4.0" prefWidth="61.0" text="Time" />
+                  <TableColumn fx:id="arrivalDateColumn" minWidth="0.0" prefWidth="105.0" text="Arrival Date" />
+                  <TableColumn fx:id="arrivalTimeColumn" minWidth="0.0" prefWidth="61.0" text="Time" />
+                  <TableColumn fx:id="durationColumn" minWidth="9.0" prefWidth="60.0" text="Duration" />
+                  <TableColumn fx:id="capacityColumn" minWidth="0.0" prefWidth="60.0" text="Capacity" />
+              </columns>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox alignment="TOP_RIGHT" prefHeight="0.0" prefWidth="990.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#addFlight" text="Add a Flight">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Modify">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Delete">
+                     <HBox.margin>
+                        <Insets right="462.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Add to my flights" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 </BorderPane>

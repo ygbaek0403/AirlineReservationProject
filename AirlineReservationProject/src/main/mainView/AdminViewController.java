@@ -152,8 +152,8 @@ public class AdminViewController implements Initializable {
 		
 		try {
 			
-			flyingFrom = flyingFromTF.getText();
-			flyingTo = flyingToTF.getText();
+			flyingFrom = flyingFromTF.getText() + "%";
+			flyingTo = flyingToTF.getText() + "%";
 			departureDate = departureDateDP.getValue().toString();
 			arrivalDate = arrivalDateDP.getValue().toString();
 			
@@ -161,22 +161,21 @@ public class AdminViewController implements Initializable {
 		
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
-				alert.setHeaderText(null);s
+				alert.setHeaderText(null);
 				alert.setContentText("Check the fields");
 				alert.showAndWait();
 				
 			} else if (!(flyingFrom.isEmpty() && flyingTo.isEmpty())) {
 				
-				query = "select * from flights where (departurecity like '?%' or departurestate like '?%') and (arrivalcity like '?%' or arrivalstate or '?%')";
-				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, flyingFromTF);
-				pstmt.setString(2, departureState);
-				pstmt.setString(3, departureState);
+
 				
 				
 			} else {
 				
-				query = "select * from flights where departurecity like '?%' and departurestate like '?%' and departuredate = ? and arrivaldate = ?";
+				query = "select * from flights where departurecity like ? or arrivalcity like ?";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, flyingFrom);
+				pstmt.setString(2, flyingTo);
 				
 			}
 			
@@ -215,7 +214,12 @@ public class AdminViewController implements Initializable {
 	
 	@FXML
 	private void goLogout() throws IOException {
-	
+		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("loginView/LoginView.fxml"));
+		mainLayout = loader.load();
+		Scene scene = new Scene(mainLayout);
+		primaryStage.setScene(scene);
 		
 	}
 

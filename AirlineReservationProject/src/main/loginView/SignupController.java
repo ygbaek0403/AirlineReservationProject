@@ -165,7 +165,7 @@ public class SignupController {
 		return false;
 	}
 	
-	
+	/*
 	public boolean isSsn(String ssnNum) {
 		int len = ssnNum.length();
 		
@@ -208,6 +208,7 @@ public class SignupController {
 		return true;
 		
 	}
+	*/
 
 
 }

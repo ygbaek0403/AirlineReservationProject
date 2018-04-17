@@ -53,7 +53,7 @@ public class LoginController {
 			rs.next();
 			
 			if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 0) {
-				
+		
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
 				mainLayout = loader.load();
@@ -93,7 +93,7 @@ public class LoginController {
 			
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
