@@ -88,7 +88,7 @@
             </Label>
             <TableView prefHeight="552.0" prefWidth="890.0">
               <columns>
-                <TableColumn prefWidth="51.0" text="Flight" />
+                <TableColumn prefWidth="50.0" text="Flight" />
                 <TableColumn prefWidth="100.0" text="Departure City" />
                   <TableColumn prefWidth="50.0" text="State" />
                   <TableColumn prefWidth="100.0" text="Arrival City" />
@@ -98,7 +98,7 @@
                   <TableColumn minWidth="0.0" prefWidth="105.0" text="Arrival Date" />
                   <TableColumn minWidth="0.0" prefWidth="61.0" text="Time" />
                   <TableColumn minWidth="9.0" prefWidth="60.0" text="Duration" />
-                  <TableColumn minWidth="0.0" prefWidth="60.0" text="Capacity" />
+                  <TableColumn minWidth="0.0" prefWidth="60.0" text="Price" />
               </columns>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -106,7 +106,7 @@
             </TableView>
             <HBox alignment="TOP_RIGHT" prefHeight="0.0" prefWidth="990.0">
                <children>
-                  <Button mnemonicParsing="false" text="Add to my flights" />
+                  <Button mnemonicParsing="false" text="Add to my trips" />
                </children>
                <VBox.margin>
                   <Insets />

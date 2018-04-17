@@ -22,21 +22,22 @@ public class LoginController {
     private TextField usernameTF;
     @FXML
     private PasswordField passwordPF;
-    
+    private static int idCustomer;
     
 	private static Stage primaryStage;
 	private static BorderPane mainLayout;
 	
+	Alert alert = new Alert(AlertType.INFORMATION);
+
+	private String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
+	private String id = "root";
+	private String pw = "iin";
 	
 	@FXML
 	private void goLogin() throws IOException, SQLException {
 		
 		String username = usernameTF.getText();
 		String password = passwordPF.getText();
-
-		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
-		String id = "root";
-		String pw = "iin";
 		
 		Connection conn = null;
 
@@ -54,6 +55,9 @@ public class LoginController {
 			
 			if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 0) {
 		
+				idCustomer = Integer.parseInt(rs.getString(1));
+				System.out.print(idCustomer);
+				
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
 				mainLayout = loader.load();
@@ -67,6 +71,9 @@ public class LoginController {
 				addDialogStage.showAndWait();
 				
 			} else if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 1) {
+				
+				idCustomer = Integer.parseInt(rs.getString(1));
+				System.out.print(idCustomer);
 				
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("mainView/UserView.fxml"));
@@ -82,7 +89,6 @@ public class LoginController {
 				
 			} else {
 				
-				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText(null);
 				alert.setContentText("Incorrect username or password");
@@ -94,7 +100,7 @@ public class LoginController {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			Alert alert = new Alert(AlertType.INFORMATION);
+
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Incorrect username or password");
@@ -106,6 +112,10 @@ public class LoginController {
 		}
 	}
 	
+	public static int getIdCustomer() {
+		
+		return idCustomer;
+	}
 	
 	@FXML
 	private void goSignup() throws IOException {

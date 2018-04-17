@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.Main;
+import main.loginView.LoginController;
 
 public class AdminViewController implements Initializable {
 
@@ -55,7 +56,7 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private TableColumn<Flight, String> durationColumn;
 	@FXML
-	private TableColumn<Flight, String> capacityColumn;
+	private TableColumn<Flight, String> priceColumn;
 	@FXML
 	private TextField flyingFromTF;
 	@FXML
@@ -67,17 +68,17 @@ public class AdminViewController implements Initializable {
 	
 	private PreparedStatement pstmt;
 	
-	
+	Alert alert = new Alert(AlertType.INFORMATION);
+
 
 	private static Stage primaryStage;
 	private static BorderPane mainLayout;
 	
+	private String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
+	private String id = "root";
+	private String pw = "iin";
 	
     public ObservableList<Flight> getFlights(String query) throws SQLException {
-    	
-    	String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
-		String id = "root";
-		String pw = "iin";
 		
 		Connection conn = null;
 		
@@ -113,86 +114,89 @@ public class AdminViewController implements Initializable {
 		 
 		String query = "select * from flights";
 		
-    	String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
-		String id = "root";
-		String pw = "iin";
-		
 		Connection conn = null;
 		
     	ObservableList<Flight> flights = FXCollections.observableArrayList();
     	
-    	try {
-			
-			conn = DriverManager.getConnection(url, id, pw);
-				
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-				
-			while (rs.next()) {
-	            
-				flights.add(new Flight(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12)));
-			}
-
-    	} catch (Exception e) {
-	        	
-    		e.printStackTrace();
-	        	
-    	} finally {
-	        	
-    		conn.close();
-    	}
+    	if (flyingFromTF.getText().equals("") && flyingToTF.getText().equals("")) {
     		
-		flightTable.setItems(flights);
-		
-		
-		String flyingFrom;
-		String flyingTo;
-		String departureDate;
-		String arrivalDate;
-		
-		try {
-			
-			flyingFrom = flyingFromTF.getText() + "%";
-			flyingTo = flyingToTF.getText() + "%";
-			departureDate = departureDateDP.getValue().toString();
-			arrivalDate = arrivalDateDP.getValue().toString();
-			
-			if (flyingFrom.isEmpty() || flyingTo.isEmpty() || departureDate.isEmpty() || arrivalDate.isEmpty()) {
-		
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Information Dialog");
-				alert.setHeaderText(null);
-				alert.setContentText("Check the fields");
-				alert.showAndWait();
-				
-			} else if (!(flyingFrom.isEmpty() && flyingTo.isEmpty())) {
-				
+        	try {
+    			
+    			conn = DriverManager.getConnection(url, id, pw);
+    				
+    			Statement stmt = conn.createStatement();
+    			ResultSet rs = stmt.executeQuery(query);
+    				
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12)));
+    			}
 
-				
-				
-			} else {
-				
-				query = "select * from flights where departurecity like ? or arrivalcity like ?";
-				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, flyingFrom);
-				pstmt.setString(2, flyingTo);
-				
-			}
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-	
+        	} catch (Exception e) {
+    	        	
+        		e.printStackTrace();
+    	        	
+        	} finally {
+    	        	
+        		conn.close();
+        	}
+        		
+    		flightTable.setItems(flights);
+    		
+    	} else if (!(flyingFromTF.getText().equals("") && flyingToTF.getText().equals(""))) {
+    		
+    		
+    		String flyingFrom;
+    		String flyingTo;
+    		String departureDate;
+    		String arrivalDate;
+    		
+    		try {
+    			
+    			flyingFrom = flyingFromTF.getText() + "%";
+    			flyingTo = flyingToTF.getText() + "%";
+    			departureDate = departureDateDP.getValue().toString();
+    			arrivalDate = arrivalDateDP.getValue().toString();
+    			
+    			if (flyingFrom.isEmpty() || flyingTo.isEmpty() || departureDate.isEmpty() || arrivalDate.isEmpty()) {
+    		
+    				alert.setTitle("Information Dialog");
+    				alert.setHeaderText(null);
+    				alert.setContentText("Check the fields");
+    				alert.showAndWait();
+    				
+    			} else if (!(flyingFrom.isEmpty() && flyingTo.isEmpty())) {
+    				
+
+    				
+    				
+    			} else {
+    				
+    				query = "select * from flights where departurecity like ? or arrivalcity like ?";
+    				pstmt = conn.prepareStatement(query);
+    				pstmt.setString(1, flyingFrom);
+    				pstmt.setString(2, flyingTo);
+    				
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    		}
+    	
+    		
+    		try {
+    			
+    			flightTable.setItems(getFlights(query));
+    			
+    		} catch (SQLException e) {
+    			
+    			e.printStackTrace();
+    		}
+    	}
+
 		
-		try {
-			
-			flightTable.setItems(getFlights(query));
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+	
 
 	}	
 	 
@@ -215,14 +219,58 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private void goLogout() throws IOException {
 		
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("loginView/LoginView.fxml"));
-		mainLayout = loader.load();
-		Scene scene = new Scene(mainLayout);
-		primaryStage.setScene(scene);
+    	FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(Main.class.getResource("loginView/LoginView.fxml"));
+    	mainLayout = loader.load();
+    	Scene scene = new Scene(mainLayout);
+    	primaryStage.setScene(scene);
 		
 	}
 
+	@FXML
+	private void addToTrip() throws SQLException {
+		
+		String idCustomer = "" + LoginController.getIdCustomer();
+		String idFlight = "";
+		
+		Connection conn = null;
+		
+    	
+    	if (flyingFromTF.getText().equals("") && flyingToTF.getText().equals("")) {
+    		
+    		try {
+    			
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`ticket_customer`, `ticket_flight`) VALUES (?, ?);";
+    			pstmt = conn.prepareStatement(queryInsert);
+    			pstmt.setString(1, idCustomer);
+    			pstmt.setString(2, idFlight);
+    					
+    			
+    			pstmt.executeUpdate();
+    			
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("Flight has been succefully added");
+				alert.showAndWait();
+        		
+        	} catch (Exception e) {
+        		
+        		e.printStackTrace();
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("Select a flight");
+				alert.showAndWait();
+				
+        	} finally {
+        		
+        		conn.close();
+        	}
+    	}
+    						
+	}
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		
@@ -237,8 +285,8 @@ public class AdminViewController implements Initializable {
 		arrivalDateColumn.setCellValueFactory(new PropertyValueFactory<Flight, LocalDate>("arrivalDate"));
 		arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("arrivalTime"));
 		durationColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("duration"));
-		capacityColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("capacity"));
-
+		priceColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("price"));
+		
 	}
 
 }

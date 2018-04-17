@@ -37,9 +37,18 @@ public class AddFlightController {
 	@FXML
 	private TextField durationTF;
 	@FXML
+	private TextField priceTF;
+	@FXML
 	private TextField capacityTF;
 	
 	private PreparedStatement pstmt;
+	
+	private String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
+	private String id = "root";
+	private String pw = "iin";
+	
+	Alert alert = new Alert(AlertType.INFORMATION);
+
 	
 	@FXML
 	private void goSubmit() throws IOException, SQLException {
@@ -55,11 +64,8 @@ public class AddFlightController {
 		String arrivalDate = arrivalDateDP.getValue().toString();
 		String arrivalTime = arrivalTimeTF.getText();
 		String duration = durationTF.getText();
+		String price = priceTF.getText();
 		String capacity = capacityTF.getText();
-
-		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
-		String id = "root";
-		String pw = "iin";
 		
 		Connection conn = null;
 		
@@ -73,9 +79,8 @@ public class AddFlightController {
 			
 			if(isDuplicate(rs, flightNumber) == false) {
 				
-				if (flightNumber.isEmpty() || departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || duration.isEmpty() || capacity.isEmpty()) {
+				if (flightNumber.isEmpty() || departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || duration.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Check your fields.");
@@ -83,7 +88,7 @@ public class AddFlightController {
 					
 				} else {
 			
-					String queryInsert = "INSERT INTO `dbo_airline`.`flights` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `capacity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					String queryInsert = "INSERT INTO `dbo_airline`.`flights` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 					pstmt = conn.prepareStatement(queryInsert);
 					pstmt.setString(1, flightNumber);
 					pstmt.setString(2, departureCity);
@@ -95,12 +100,13 @@ public class AddFlightController {
 					pstmt.setString(8, arrivalDate);
 					pstmt.setString(9, arrivalTime);
 					pstmt.setString(10, duration);
-					pstmt.setString(11, capacity);
+					pstmt.setString(11, price);
+					pstmt.setString(12, capacity);
+					
 					
 					pstmt.executeUpdate();
 					conn.close();
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("The flight is succefully registered");
@@ -111,7 +117,7 @@ public class AddFlightController {
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());
-			Alert alert = new Alert(AlertType.INFORMATION);
+
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your fields.");
@@ -133,7 +139,6 @@ public class AddFlightController {
 				
 				if(flightNumber.equals(rs.getString("flightnumber"))) {
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("The flight number is already exist");

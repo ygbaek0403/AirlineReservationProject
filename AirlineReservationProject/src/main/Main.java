@@ -39,7 +39,7 @@ public class Main extends Application {
     	try {
 			showLoginView();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
     	

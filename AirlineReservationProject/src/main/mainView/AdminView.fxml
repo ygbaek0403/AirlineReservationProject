@@ -88,7 +88,7 @@
             </Label>
             <TableView fx:id="flightTable" prefHeight="552.0" prefWidth="890.0">
               <columns>
-                <TableColumn fx:id="flightNumberColumn" prefWidth="51.0" text="Flight" />
+                <TableColumn fx:id="flightNumberColumn" prefWidth="50.0" text="Flight" />
                 <TableColumn fx:id="departureCityColumn" prefWidth="100.0" text="Departure City" />
                   <TableColumn fx:id="departureStateColumn" prefWidth="50.0" text="State" />
                   <TableColumn fx:id="arrivalCityColumn" prefWidth="100.0" text="Arrival City" />
@@ -98,7 +98,7 @@
                   <TableColumn fx:id="arrivalDateColumn" minWidth="0.0" prefWidth="105.0" text="Arrival Date" />
                   <TableColumn fx:id="arrivalTimeColumn" minWidth="0.0" prefWidth="61.0" text="Time" />
                   <TableColumn fx:id="durationColumn" minWidth="9.0" prefWidth="60.0" text="Duration" />
-                  <TableColumn fx:id="capacityColumn" minWidth="0.0" prefWidth="60.0" text="Capacity" />
+                  <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="60.0" text="Price" />
               </columns>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -118,10 +118,10 @@
                   </Button>
                   <Button mnemonicParsing="false" text="Delete">
                      <HBox.margin>
-                        <Insets right="462.0" />
+                        <Insets right="472.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Add to my flights" />
+                  <Button mnemonicParsing="false" onAction="#addToTrip" text="Add to my trips" />
                </children>
                <VBox.margin>
                   <Insets />

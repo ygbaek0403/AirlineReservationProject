@@ -27,9 +27,10 @@
                <children>
                   <Label text="Flight Number:">
                      <HBox.margin>
-                        <Insets right="103.0" />
+                        <Insets right="83.0" />
                      </HBox.margin>
                   </Label>
+                  <Label text="Capacity:" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -39,9 +40,10 @@
                <children>
                   <TextField fx:id="flightNumberTF" prefHeight="27.0" prefWidth="363.0">
                      <HBox.margin>
-                        <Insets />
+                        <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
+                  <TextField fx:id="capacityTF" prefHeight="27.0" prefWidth="363.0" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -103,7 +105,7 @@
                <children>
                   <Label text="DepartureDate:">
                      <HBox.margin>
-                        <Insets right="93.0" />
+                        <Insets right="78.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="DepartureTime:" />
@@ -114,7 +116,7 @@
             </HBox>
             <HBox prefHeight="0.0" prefWidth="335.0">
                <children>
-                  <DatePicker fx:id="departureDateDP">
+                  <DatePicker fx:id="departureDateDP" prefWidth="166.5">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -129,7 +131,7 @@
                <children>
                   <Label text="ArrivalDate:">
                      <HBox.margin>
-                        <Insets right="115.0" />
+                        <Insets right="100.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="ArrivalTime" />
@@ -140,7 +142,7 @@
             </HBox>
             <HBox prefHeight="0.0" prefWidth="335.0">
                <children>
-                  <DatePicker fx:id="arrivalDateDP">
+                  <DatePicker fx:id="arrivalDateDP" prefWidth="166.5">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -155,10 +157,10 @@
                <children>
                   <Label text="Duration:">
                      <HBox.margin>
-                        <Insets right="118.0" />
+                        <Insets right="117.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="Capacity:" />
+                  <Label text="Price:" />
                </children>
                <padding>
                   <Insets bottom="5.0" />
@@ -171,7 +173,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="capacityTF" />
+                  <TextField fx:id="priceTF" />
                </children>
             </HBox>
          </children>

@@ -35,8 +35,11 @@ public class SignupController {
 	@FXML
 	private TextField securityAnsTF;
 	
+	Alert alert = new Alert(AlertType.INFORMATION);
 
-	
+	private String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
+	private String id = "root";
+	private String pw = "iin";
 	
 	@FXML
 	private void goSubmit() throws IOException, SQLException {
@@ -54,10 +57,6 @@ public class SignupController {
 		String securityQue = securityQueTF.getText();
 		String securityAns = securityAnsTF.getText();
 
-		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
-		String id = "root";
-		String pw = "iin";
-		
 		Connection conn = null;
 
 		try {
@@ -71,7 +70,6 @@ public class SignupController {
 				
 				if (username.isEmpty() || password.isEmpty() || ssn.isEmpty() || securityQue.isEmpty() || securityAns.isEmpty()) {
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Check your fields.");
@@ -96,7 +94,6 @@ public class SignupController {
 					pstmt.executeUpdate();
 					conn.close();
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("You are succefully registered");
@@ -107,8 +104,7 @@ public class SignupController {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(AlertType.INFORMATION);
+			
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your fields.");
@@ -130,7 +126,6 @@ public class SignupController {
 				
 				if(username.equals(rs.getString("username"))) {
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Your username is already exist");
@@ -139,7 +134,6 @@ public class SignupController {
 					
 				} else if(ssn.equals("\\d{3}-?\\d{2}-?\\d{4}")){
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Your ssn is not correct");
@@ -148,7 +142,6 @@ public class SignupController {
 					
 				}else if (ssn.equals(rs.getString("ssn"))) {
 					
-					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Your ssn is already exist");

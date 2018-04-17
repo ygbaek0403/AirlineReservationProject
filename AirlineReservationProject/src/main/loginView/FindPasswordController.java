@@ -21,6 +21,11 @@ public class FindPasswordController {
 	@FXML
 	private Label securityQueLB;
 	
+	Alert alert = new Alert(AlertType.INFORMATION);
+
+	private String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
+	private String id = "root";
+	private String pw = "iin";
 	
 	@FXML
 	private void goFind() throws IOException, SQLException {
@@ -28,9 +33,6 @@ public class FindPasswordController {
 		String username = usernameTF.getText();
 		String securityQue;
 
-		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
-		String id = "root";
-		String pw = "iin";
 		
 		Connection conn = null;
 
@@ -54,8 +56,8 @@ public class FindPasswordController {
 		
 		} catch (Exception e) {
 			
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(AlertType.INFORMATION);
+			e.printStackTrace();
+			
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your username.");
@@ -73,10 +75,6 @@ public class FindPasswordController {
 		
 		String username = usernameTF.getText();
 		String securityAns = securityAnsTF.getText();
-	
-		String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
-		String id = "root";
-		String pw = "iin";
 		
 		Connection conn = null;
 
@@ -93,7 +91,6 @@ public class FindPasswordController {
 			
 			if (securityAns.equals(rs.getString("securityAns"))) {
 				
-				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText(null);
 				alert.setContentText("Your password: " + rs.getString("password"));
@@ -101,7 +98,6 @@ public class FindPasswordController {
 								
 			} else {
 				
-				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText(null);
 				alert.setContentText("Check your security answer.");
@@ -112,8 +108,8 @@ public class FindPasswordController {
 		
 		} catch (Exception e) {
 			
-			System.out.println(e.getMessage());
-			Alert alert = new Alert(AlertType.INFORMATION);
+			e.printStackTrace();
+			
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your security answer.");
