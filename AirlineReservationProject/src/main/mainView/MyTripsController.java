@@ -108,17 +108,16 @@ public class MyTripsController implements Initializable {
 	@FXML
 	private void goDelete() throws SQLException {
 		
-		int flightNumber = flightTable.getSelectionModel().getSelectedItem().getIdTicket();
-		
 		Connection conn = null;
 		
 		try {
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			
+			int idTicket = flightTable.getSelectionModel().getSelectedItem().getIdTicket();
 			String queryDelete = "DELETE FROM `dbo_airline`.`tickets` WHERE `idticket`= ?";
 			pstmt = conn.prepareStatement(queryDelete);
-			pstmt.setString(1, "" + flightNumber);
+			pstmt.setString(1, "" + idTicket);
 			
 			pstmt.executeUpdate();
 			

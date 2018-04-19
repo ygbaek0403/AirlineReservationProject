@@ -334,6 +334,46 @@ public class AdminViewController implements Initializable {
 		}					
 	}
 	
+	
+	@FXML
+	private void goDelete() throws SQLException {
+	
+		Connection conn = null;
+		
+		try {
+			
+			conn = DriverManager.getConnection(url, id, pw);
+			
+			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
+			String queryDelete = "DELETE FROM `dbo_airline`.`flights` WHERE `idflight`= ?";
+			pstmt = conn.prepareStatement(queryDelete);
+			pstmt.setString(1, "" + idFlight);
+			
+			pstmt.executeUpdate();
+			
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("The flight is succefully deleted");
+			alert.showAndWait();
+
+			initialize(null, null);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Select a flight");
+			alert.showAndWait();
+
+		} finally {
+	
+			conn.close();
+		}
+	}
+
+	
 
 	public boolean isDuplicate(ResultSet rs, String flightNumber) {
 		
