@@ -1,9 +1,11 @@
 package classes;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Flight {
 
+	private SimpleIntegerProperty idFlight;
 	private SimpleStringProperty flightNumber;
 	private SimpleStringProperty departureCity;
 	private SimpleStringProperty departureState; 
@@ -14,11 +16,13 @@ public class Flight {
 	private SimpleStringProperty arrivalDate;
 	private SimpleStringProperty arrivalTime;
 	private SimpleStringProperty duration;
+	private SimpleStringProperty price;
 	private SimpleStringProperty capacity;
 	
 	
-	public Flight(String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, String departureDate, String departureTime, String arrivalDate, String arrivalTime, String duration, String capacity) {
+	public Flight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, String departureDate, String departureTime, String arrivalDate, String arrivalTime, String duration, String price, String capacity) {
 	
+		this.idFlight = new SimpleIntegerProperty(idFlight);
 		this.flightNumber = new SimpleStringProperty(flightNumber);
 		this.departureCity = new SimpleStringProperty(departureCity);
 		this.departureState = new SimpleStringProperty(departureState);
@@ -29,9 +33,18 @@ public class Flight {
 		this.arrivalDate = new SimpleStringProperty(arrivalDate);
 		this.arrivalTime = new SimpleStringProperty(arrivalTime);
 		this.duration = new SimpleStringProperty(duration);
-		this.capacity = new SimpleStringProperty(capacity);		 
+		this.price = new SimpleStringProperty(price);	
+		this.capacity = new SimpleStringProperty(capacity);		
 	}
 
+	public int getIdFlight() {
+		return idFlight.get();
+	}
+
+	public void setIdFlight(SimpleIntegerProperty idFlight) {
+		this.idFlight = idFlight;
+	}
+	
 	public String getFlightNumber() {
 		return flightNumber.get();
 	}
@@ -112,6 +125,14 @@ public class Flight {
 		this.duration = duration;
 	}
 
+	public String getPrice() {
+		return price.get();
+	}
+
+	public void setPrice(SimpleStringProperty price) {
+		this.price = price;
+	}
+	
 	public String getCapacity() {
 		return capacity.get();
 	}
@@ -119,6 +140,5 @@ public class Flight {
 	public void setCapacity(SimpleStringProperty capacity) {
 		this.capacity = capacity;
 	}
-	
 	
 }

@@ -105,7 +105,6 @@ public class AddFlightController {
 					
 					
 					pstmt.executeUpdate();
-					conn.close();
 					
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
@@ -149,7 +148,7 @@ public class AddFlightController {
 			}
 		} catch (SQLException e) {
 
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return false;

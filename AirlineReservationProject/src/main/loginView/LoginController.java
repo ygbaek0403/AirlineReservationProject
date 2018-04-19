@@ -56,7 +56,6 @@ public class LoginController {
 			if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 0) {
 		
 				idCustomer = Integer.parseInt(rs.getString(1));
-				System.out.print(idCustomer);
 				
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
@@ -73,7 +72,6 @@ public class LoginController {
 			} else if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 1) {
 				
 				idCustomer = Integer.parseInt(rs.getString(1));
-				System.out.print(idCustomer);
 				
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("mainView/UserView.fxml"));
@@ -116,6 +114,7 @@ public class LoginController {
 		
 		return idCustomer;
 	}
+	
 	
 	@FXML
 	private void goSignup() throws IOException {

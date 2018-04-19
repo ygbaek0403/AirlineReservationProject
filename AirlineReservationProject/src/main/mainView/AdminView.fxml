@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainView.AdminViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainView.AdminViewController">
       <left>
       <VBox alignment="CENTER" prefHeight="550.0" prefWidth="156.0" BorderPane.alignment="CENTER">
          <children>
@@ -68,7 +68,7 @@
       <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
     	    <Button mnemonicParsing="false" onAction="#goLogout" text="Logout" />
-	        <Button mnemonicParsing="false" text="My trips" />
+	        <Button mnemonicParsing="false" onAction="#goToTrip" text="My trips" />
         </items>
          <opaqueInsets>
             <Insets />
@@ -88,8 +88,9 @@
             </Label>
             <TableView fx:id="flightTable" prefHeight="552.0" prefWidth="890.0">
               <columns>
-                <TableColumn fx:id="flightNumberColumn" prefWidth="50.0" text="Flight" />
-                <TableColumn fx:id="departureCityColumn" prefWidth="100.0" text="Departure City" />
+                  <TableColumn fx:id="idFlightColumn" prefWidth="30.0" text="ID" />
+                  <TableColumn fx:id="flightNumberColumn" prefWidth="50.0" text="Flight" />
+                  <TableColumn fx:id="departureCityColumn" prefWidth="100.0" text="Departure City" />
                   <TableColumn fx:id="departureStateColumn" prefWidth="50.0" text="State" />
                   <TableColumn fx:id="arrivalCityColumn" prefWidth="100.0" text="Arrival City" />
                   <TableColumn fx:id="arrivalStateColumn" minWidth="0.0" prefWidth="50.0" text="State" />
@@ -118,7 +119,7 @@
                   </Button>
                   <Button mnemonicParsing="false" text="Delete">
                      <HBox.margin>
-                        <Insets right="472.0" />
+                        <Insets right="572.0" />
                      </HBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#addToTrip" text="Add to my trips" />

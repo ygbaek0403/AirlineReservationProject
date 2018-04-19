@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import classes.Flight;
+import classes.Ticket;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,38 +29,40 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.Main;
+import main.loginView.LoginController;
 
 public class MyTripsController implements Initializable {
 
 	@FXML
-	private TableView<Flight> flightTable;
+	private TableView<Ticket> flightTable;
 	@FXML
-	private TableColumn<Flight, String> flightNumberColumn;
+	private TableColumn<Ticket, Integer> idTicketColumn;
 	@FXML
-	private TableColumn<Flight, String> departureCityColumn;
+	private TableColumn<Ticket, String> flightNumberColumn;
 	@FXML
-	private TableColumn<Flight, String> departureStateColumn;
+	private TableColumn<Ticket, String> departureCityColumn;
 	@FXML
-	private TableColumn<Flight, String> arrivalCityColumn;
+	private TableColumn<Ticket, String> departureStateColumn;
 	@FXML
-	private TableColumn<Flight, String> arrivalStateColumn;
+	private TableColumn<Ticket, String> arrivalCityColumn;
 	@FXML
-	private TableColumn<Flight, LocalDate> departureDateColumn;
+	private TableColumn<Ticket, String> arrivalStateColumn;
 	@FXML
-	private TableColumn<Flight, String> departureTimeColumn;
+	private TableColumn<Ticket, LocalDate> departureDateColumn;
 	@FXML
-	private TableColumn<Flight, LocalDate> arrivalDateColumn;
+	private TableColumn<Ticket, String> departureTimeColumn;
 	@FXML
-	private TableColumn<Flight, String> arrivalTimeColumn;
+	private TableColumn<Ticket, LocalDate> arrivalDateColumn;
 	@FXML
-	private TableColumn<Flight, String> durationColumn;
+	private TableColumn<Ticket, String> arrivalTimeColumn;
 	@FXML
-	private TableColumn<Flight, String> priceColumn;
+	private TableColumn<Ticket, String> durationColumn;
+	@FXML
+	private TableColumn<Ticket, String> priceColumn;
 
-	
 	private PreparedStatement pstmt;
-	
-	
+
+	Alert alert = new Alert(AlertType.INFORMATION);
 
 	private static Stage primaryStage;
 	private static BorderPane mainLayout;
@@ -69,24 +71,25 @@ public class MyTripsController implements Initializable {
 	private String id = "root";
 	private String pw = "iin";
 	
-    public void getFlights() throws SQLException {
+
+
+    public ObservableList<Ticket> getFlights(String query) throws SQLException {
+		
     	
-		String query = "";
 		Connection conn = null;
 		
-    	ObservableList<Flight> flights = FXCollections.observableArrayList();
+    	ObservableList<Ticket> tickets = FXCollections.observableArrayList();
     	
     	try {
 			
 			conn = DriverManager.getConnection(url, id, pw);
-			
-			query = "select * from tickets where ";
+				
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 				
 			while (rs.next()) {
 	            
-				flights.add(new Flight(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12)));
+				tickets.add(new Ticket(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15)));
 			}
 
 	        } catch (Exception e) {
@@ -98,9 +101,50 @@ public class MyTripsController implements Initializable {
 	        	conn.close();
 	        }
 			
-    	flightTable.setItems(flights);
-	}	
+			return tickets;
 
+    }
+	
+	@FXML
+	private void goDelete() throws SQLException {
+		
+		int flightNumber = flightTable.getSelectionModel().getSelectedItem().getIdTicket();
+		
+		Connection conn = null;
+		
+		try {
+			
+			conn = DriverManager.getConnection(url, id, pw);
+			
+			String queryDelete = "DELETE FROM `dbo_airline`.`tickets` WHERE `idticket`= ?";
+			pstmt = conn.prepareStatement(queryDelete);
+			pstmt.setString(1, "" + flightNumber);
+			
+			pstmt.executeUpdate();
+			
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("The flight is succefully deleted");
+			alert.showAndWait();
+
+			initialize(null, null);
+			
+		} catch (Exception e) {
+
+			System.out.println(e.getMessage());
+
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Select a flight");
+			alert.showAndWait();
+
+		} finally {
+	
+			conn.close();
+		}
+	}
+
+	
 	@FXML
 	private void goBack() throws IOException {
 		
@@ -112,22 +156,36 @@ public class MyTripsController implements Initializable {
 		
 	}
 
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		
 		//set up columns
-		flightNumberColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("flightNumber"));
-		departureCityColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("departureCity"));
-		departureStateColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("departureState"));
-		arrivalCityColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("arrivalCity"));
-		arrivalStateColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("arrivalState"));
-		departureDateColumn.setCellValueFactory(new PropertyValueFactory<Flight, LocalDate>("departureDate"));
-		departureTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("departureTime"));
-		arrivalDateColumn.setCellValueFactory(new PropertyValueFactory<Flight, LocalDate>("arrivalDate"));
-		arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("arrivalTime"));
-		durationColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("duration"));
-		priceColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("price"));
+		idTicketColumn.setCellValueFactory(new PropertyValueFactory<Ticket, Integer>("idTicket"));
+		flightNumberColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("flightNumber"));
+		departureCityColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("departureCity"));
+		departureStateColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("departureState"));
+		arrivalCityColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("arrivalCity"));
+		arrivalStateColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("arrivalState"));
+		departureDateColumn.setCellValueFactory(new PropertyValueFactory<Ticket, LocalDate>("departureDate"));
+		departureTimeColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("departureTime"));
+		arrivalDateColumn.setCellValueFactory(new PropertyValueFactory<Ticket, LocalDate>("arrivalDate"));
+		arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("arrivalTime"));
+		durationColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("duration"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("price"));
+				
+		flightTable.setEditable(true);
+
+		int idCustomer = LoginController.getIdCustomer();
+		String query = "select * from tickets where ticket_customer = " + idCustomer;
+
+		try {
+			flightTable.setItems(getFlights(query));
+		} catch (SQLException e) {
 		
+			e.printStackTrace();
+		}
+
 	}
 
 }
