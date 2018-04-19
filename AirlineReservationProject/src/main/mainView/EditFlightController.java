@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import classes.Flight;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -14,7 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
 
 
-public class AddFlightController {
+public class EditFlightController {
 
 	@FXML
 	private TextField flightNumberTF;
@@ -48,12 +50,37 @@ public class AddFlightController {
 	private String pw = "iin";
 	
 	Alert alert = new Alert(AlertType.INFORMATION);
+	
 
+	AdminViewController avc = new AdminViewController();
+	
+	
+	@FXML
+	private void viewFN() {
+		flightNumberTF.setText(avc.getFlight().getFlightNumber());
+	}
+
+	@FXML
+	public void viewFlight() {
+		
+		flightNumberTF.setText(avc.getFlight().getFlightNumber());
+		/*departureCityTF.setText(f.getDepartureCity());
+		departureStateTF.setText(f.getDepartureState());
+		arrivalCityTF.setText(f.getArrivalCity());
+		arrivalStateTF.setText(f.getArrivalState());
+		//departureDateDP.setPromptText(f.getDepartureDate());
+		departureTimeTF.setText(f.getDepartureTime());
+		//arrivalDateDP.setPromptText(f.getArrivalDate());
+		arrivalTimeTF.setText(f.getArrivalTime());
+		durationTF.setText(f.getDuration());
+		priceTF.setText(f.getPrice());
+		capacityTF.setText(f.getCapacity());
+		*/
+	}
 	
 	@FXML
 	private void goSubmit() throws IOException, SQLException {
-		
-		
+
 		String flightNumber = flightNumberTF.getText();
 		String departureCity = departureCityTF.getText();
 		String departureState = departureStateTF.getText();
@@ -87,8 +114,10 @@ public class AddFlightController {
 					alert.showAndWait();
 					
 				} else {
-			
-					String queryInsert = "INSERT INTO `dbo_airline`.`flights` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					
+					String idFlight = "" + avc.getFlight().getIdFlight();
+					
+					String queryInsert = "UPDATE `dbo_airline`.`flights` SET `idflight`= ?, `flightNumber`= ?, `departureCity`= ?, `departureState`= ?, `arrivalCity`= ?, `arrivalState`= ?, `departureDate`= ?, `departureTime`= ?, `arrivalDate`= ?, `arrivalTime`= ?, `duration`= ?, `price`= ?, `capacity`= ? WHERE `idflight`= ?";
 					pstmt = conn.prepareStatement(queryInsert);
 					pstmt.setString(1, flightNumber);
 					pstmt.setString(2, departureCity);
@@ -102,8 +131,9 @@ public class AddFlightController {
 					pstmt.setString(10, duration);
 					pstmt.setString(11, price);
 					pstmt.setString(12, capacity);
+					pstmt.setString(13, capacity);
 				
-					pstmt.executeUpdate();
+					pstmt.executeUpdate(idFlight);
 					
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);

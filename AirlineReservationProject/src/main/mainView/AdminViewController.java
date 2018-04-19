@@ -83,6 +83,11 @@ public class AdminViewController implements Initializable {
 	private String pw = "iin";
 	
 	
+	public Flight getFlight() {
+		
+		return flightTable.getSelectionModel().getSelectedItem();
+	}
+	
     public ObservableList<Flight> getFlights(String query) throws SQLException {
 		
 		Connection conn = null;
@@ -210,7 +215,7 @@ public class AdminViewController implements Initializable {
 		mainLayout = loader.load();
 		
 		Stage addDialogStage = new Stage();
-		addDialogStage.setTitle("Sigh up");
+		addDialogStage.setTitle("Add a flight");
 		addDialogStage.initModality(Modality.WINDOW_MODAL);
 		addDialogStage.initOwner(primaryStage);
 		Scene scene = new Scene(mainLayout);
@@ -218,21 +223,59 @@ public class AdminViewController implements Initializable {
 		addDialogStage.showAndWait();
 	}
 	
-	/*
-	@FXML void deleteFlight() {
+	@FXML
+	private void editFlight() throws IOException {
 		
-		String idFlight = 
-		Connection conn = null;
-		conn = DriverManager.getConnection(url, id, pw);
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("mainView/EditFlight.fxml"));
+		mainLayout = loader.load();
 		
-		String queryDelete = "DELETE FROM `dbo_airline`.`flights` WHERE `idflight`= ?;";
-	
-		pstmt = conn.prepareStatement(queryDelete);
-		pstmt.setString(1, idFlight);
-		pstmt.executeUpdate();
-
+		Stage addDialogStage = new Stage();
+		addDialogStage.setTitle("Edit a flight");
+		addDialogStage.initModality(Modality.WINDOW_MODAL);
+		addDialogStage.initOwner(primaryStage);
+		Scene scene = new Scene(mainLayout);
+		addDialogStage.setScene(scene);
+		addDialogStage.showAndWait();
 	}
-	*/
+	
+	@FXML
+	private void deleteFlight() throws SQLException {
+	
+		Connection conn = null;
+		
+		try {
+			
+			conn = DriverManager.getConnection(url, id, pw);
+			
+			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
+			String queryDelete = "DELETE FROM `dbo_airline`.`flights` WHERE `idflight`= ?";
+			pstmt = conn.prepareStatement(queryDelete);
+			pstmt.setString(1, "" + idFlight);
+			
+			pstmt.executeUpdate();
+			
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("The flight is succefully deleted");
+			alert.showAndWait();
+
+			initialize(null, null);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Select a flight");
+			alert.showAndWait();
+
+		} finally {
+	
+			conn.close();
+		}
+	}
 	
 	@FXML
 	private void goToTrip() throws IOException {
@@ -334,44 +377,7 @@ public class AdminViewController implements Initializable {
 		}					
 	}
 	
-	
-	@FXML
-	private void goDelete() throws SQLException {
-	
-		Connection conn = null;
-		
-		try {
-			
-			conn = DriverManager.getConnection(url, id, pw);
-			
-			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
-			String queryDelete = "DELETE FROM `dbo_airline`.`flights` WHERE `idflight`= ?";
-			pstmt = conn.prepareStatement(queryDelete);
-			pstmt.setString(1, "" + idFlight);
-			
-			pstmt.executeUpdate();
-			
-			alert.setTitle("Information Dialog");
-			alert.setHeaderText(null);
-			alert.setContentText("The flight is succefully deleted");
-			alert.showAndWait();
 
-			initialize(null, null);
-			
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-			alert.setTitle("Information Dialog");
-			alert.setHeaderText(null);
-			alert.setContentText("Select a flight");
-			alert.showAndWait();
-
-		} finally {
-	
-			conn.close();
-		}
-	}
 
 	
 

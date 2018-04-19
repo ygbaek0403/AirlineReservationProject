@@ -112,14 +112,14 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Modify">
+                  <Button mnemonicParsing="false" onAction="#editFlight" text="Edit">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#goDelete" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#deleteFlight" text="Delete">
                      <HBox.margin>
-                        <Insets right="572.0" />
+                        <Insets right="590.0" />
                      </HBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#addToTrip" text="Add to my trips" />
