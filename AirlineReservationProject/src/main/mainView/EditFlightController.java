@@ -132,7 +132,7 @@ public class EditFlightController implements Initializable {
 					pstmt.setString(12, price);
 					pstmt.setString(13, capacity);
 					pstmt.setString(14, idFlight);
-				
+				//
 					pstmt.executeUpdate();
 					
 					alert.setTitle("Information Dialog");
