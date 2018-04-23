@@ -1,5 +1,7 @@
 package classes;
 
+import java.time.LocalDate;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -11,16 +13,16 @@ public class Flight {
 	private SimpleStringProperty departureState; 
 	private SimpleStringProperty arrivalCity; 
 	private SimpleStringProperty arrivalState;
-	private SimpleStringProperty departureDate;
+	private LocalDate departureDate;
 	private SimpleStringProperty departureTime;
-	private SimpleStringProperty arrivalDate;
+	private LocalDate arrivalDate;
 	private SimpleStringProperty arrivalTime;
 	private SimpleStringProperty duration;
 	private SimpleStringProperty price;
 	private SimpleStringProperty capacity;
 	
 	
-	public Flight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, String departureDate, String departureTime, String arrivalDate, String arrivalTime, String duration, String price, String capacity) {
+	public Flight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String duration, String price, String capacity) {
 	
 		this.idFlight = new SimpleIntegerProperty(idFlight);
 		this.flightNumber = new SimpleStringProperty(flightNumber);
@@ -28,9 +30,9 @@ public class Flight {
 		this.departureState = new SimpleStringProperty(departureState);
 		this.arrivalCity = new SimpleStringProperty(arrivalCity);
 		this.arrivalState = new SimpleStringProperty(arrivalState);
-		this.departureDate = new SimpleStringProperty(departureDate);
+		this.departureDate = departureDate;
 		this.departureTime = new SimpleStringProperty(departureTime);
-		this.arrivalDate = new SimpleStringProperty(arrivalDate);
+		this.arrivalDate = arrivalDate;
 		this.arrivalTime = new SimpleStringProperty(arrivalTime);
 		this.duration = new SimpleStringProperty(duration);
 		this.price = new SimpleStringProperty(price);	
@@ -85,11 +87,11 @@ public class Flight {
 		this.arrivalState = arrivalState;
 	}
 
-	public String getDepartureDate() {
-		return departureDate.get();
+	public LocalDate getDepartureDate() {
+		return departureDate;
 	}
 
-	public void setDepartureDate(SimpleStringProperty departureDate) {
+	public void setDepartureDate(LocalDate departureDate) {
 		this.departureDate = departureDate;
 	}
 
@@ -101,11 +103,11 @@ public class Flight {
 		this.departureTime = departureTime;
 	}
 
-	public String getArrivalDate() {
-		return arrivalDate.get();
+	public LocalDate getArrivalDate() {
+		return arrivalDate;
 	}
 
-	public void setArrivalDate(SimpleStringProperty arrivalDate) {
+	public void setArrivalDate(LocalDate arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 

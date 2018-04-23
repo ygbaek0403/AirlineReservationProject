@@ -3,6 +3,7 @@ package main.mainView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import classes.Flight;
 import javafx.collections.FXCollections;
@@ -17,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
@@ -103,7 +107,7 @@ public class AdminViewController implements Initializable {
 				
 			while (rs.next()) {
 	            
-				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13)));
+				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13)));
 			}
 
 	        } catch (Exception e) {
@@ -139,7 +143,7 @@ public class AdminViewController implements Initializable {
     				
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13)));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13)));
     			}
 
         	} catch (Exception e) {
@@ -226,17 +230,50 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private void editFlight() throws IOException {
 		
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("mainView/EditFlight.fxml"));
-		mainLayout = loader.load();
+		try {
+
+			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
+			String flightNumber = flightTable.getSelectionModel().getSelectedItem().getFlightNumber();
+			String departureCity = flightTable.getSelectionModel().getSelectedItem().getDepartureCity();
+			String departureState = flightTable.getSelectionModel().getSelectedItem().getDepartureState();
+			String arrivalCity = flightTable.getSelectionModel().getSelectedItem().getArrivalCity();
+			String arrivalState = flightTable.getSelectionModel().getSelectedItem().getArrivalState();
+			LocalDate departureDate = flightTable.getSelectionModel().getSelectedItem().getDepartureDate();
+			String departureTime =flightTable.getSelectionModel().getSelectedItem().getDepartureTime();
+			LocalDate arrivalDate = flightTable.getSelectionModel().getSelectedItem().getArrivalDate();
+			String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
+			String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
+			String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
+			String capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
+				
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("mainView/EditFlight.fxml"));
+			
+			loader.load();
+			
+			EditFlightController efc = loader.getController();
+			efc.setFlight(idFlight, flightNumber, departureCity, departureState, arrivalCity, arrivalState, departureDate, departureTime, arrivalDate, arrivalTime, duration, price, capacity);
 		
-		Stage addDialogStage = new Stage();
-		addDialogStage.setTitle("Edit a flight");
-		addDialogStage.initModality(Modality.WINDOW_MODAL);
-		addDialogStage.initOwner(primaryStage);
-		Scene scene = new Scene(mainLayout);
-		addDialogStage.setScene(scene);
-		addDialogStage.showAndWait();
+			Parent p = loader.getRoot();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(p));
+			stage.showAndWait();
+			
+		} catch(IOException e) { 
+			
+			Logger.getLogger(AdminViewController.class.getName()).log(Level.SEVERE, null, e);
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Select a flight");
+			alert.showAndWait();
+			
+		}
+		
 	}
 	
 	@FXML
@@ -312,9 +349,9 @@ public class AdminViewController implements Initializable {
 		String departureState = flightTable.getSelectionModel().getSelectedItem().getDepartureState();
 		String arrivalCity = flightTable.getSelectionModel().getSelectedItem().getArrivalCity();
 		String arrivalState = flightTable.getSelectionModel().getSelectedItem().getArrivalState();
-		String departureDate = flightTable.getSelectionModel().getSelectedItem().getDepartureDate();
+		LocalDate departureDate = flightTable.getSelectionModel().getSelectedItem().getDepartureDate();
 		String departureTime =flightTable.getSelectionModel().getSelectedItem().getDepartureTime();
-		String arrivalDate = flightTable.getSelectionModel().getSelectedItem().getArrivalDate();
+		LocalDate arrivalDate = flightTable.getSelectionModel().getSelectedItem().getArrivalDate();
 		String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
 		String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
 		String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
@@ -343,9 +380,9 @@ public class AdminViewController implements Initializable {
 				pstmt.setString(3, departureState);
 				pstmt.setString(4, arrivalCity);
 				pstmt.setString(5, arrivalState);
-				pstmt.setString(6, departureDate);
+				pstmt.setDate(6, Date.valueOf(departureDate));
 				pstmt.setString(7, departureTime);
-				pstmt.setString(8, arrivalDate);
+				pstmt.setDate(8, Date.valueOf(arrivalDate));
 				pstmt.setString(9, arrivalTime);
 				pstmt.setString(10, duration);
 				pstmt.setString(11, price);
@@ -435,5 +472,4 @@ public class AdminViewController implements Initializable {
 		}
 
 	}
-
 }
