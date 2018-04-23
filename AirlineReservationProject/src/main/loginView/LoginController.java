@@ -57,33 +57,13 @@ public class LoginController {
 		
 				idCustomer = Integer.parseInt(rs.getString(1));
 				
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
-				mainLayout = loader.load();
-				
-				Stage addDialogStage = new Stage();
-				addDialogStage.setTitle("Admin View");
-				addDialogStage.initModality(Modality.WINDOW_MODAL);
-				addDialogStage.initOwner(primaryStage);
-				Scene scene = new Scene(mainLayout);
-				addDialogStage.setScene(scene);
-				addDialogStage.showAndWait();
+				Main.showAdminView();
 				
 			} else if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 1) {
 				
 				idCustomer = Integer.parseInt(rs.getString(1));
 				
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Main.class.getResource("mainView/UserView.fxml"));
-				mainLayout = loader.load();
-				
-				Stage addDialogStage = new Stage();
-				addDialogStage.setTitle("User View");
-				addDialogStage.initModality(Modality.WINDOW_MODAL);
-				addDialogStage.initOwner(primaryStage);
-				Scene scene = new Scene(mainLayout);
-				addDialogStage.setScene(scene);
-				addDialogStage.showAndWait();
+				Main.showUserView();
 				
 			} else {
 				

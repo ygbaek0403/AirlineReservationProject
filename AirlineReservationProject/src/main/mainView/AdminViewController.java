@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import classes.Flight;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -317,29 +318,15 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private void goToTrip() throws IOException {
 		
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("mainView/MyTrips.fxml"));
-		mainLayout = loader.load();
-		
-		Stage addDialogStage = new Stage();
-		addDialogStage.setTitle("My Trips");
-		addDialogStage.initModality(Modality.WINDOW_MODAL);
-		addDialogStage.initOwner(primaryStage);
-		Scene scene = new Scene(mainLayout);
-		addDialogStage.setScene(scene);
-		addDialogStage.showAndWait();
+		Main.showMyTrip();
 	}
 	
 	@FXML
 	private void goLogout() throws IOException {
-		
-    	FXMLLoader loader = new FXMLLoader();
-    	loader.setLocation(Main.class.getResource("loginView/LoginView.fxml"));
-    	mainLayout = loader.load();
-    	Scene scene = new Scene(mainLayout);
-    	primaryStage.setScene(scene);
-		
+       
+    	Main.showLoginView();
 	}
+	
 
 	@FXML
 	private void addToTrip() throws SQLException {

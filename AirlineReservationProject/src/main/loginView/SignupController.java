@@ -66,7 +66,7 @@ public class SignupController {
 			String query = "select username, ssn from customers";
 			ResultSet rs = stmt.executeQuery(query);
 			
-			if(isDuplicate(rs, username, ssn) == false) {
+			if(isDuplicate(rs, username, ssn, email) == false) {
 				
 				if (username.isEmpty() || password.isEmpty() || ssn.isEmpty() || securityQue.isEmpty() || securityAns.isEmpty()) {
 					
@@ -118,13 +118,13 @@ public class SignupController {
 		
 	}
 	
-	public boolean isDuplicate(ResultSet rs, String username, String ssn) {
+	public boolean isDuplicate(ResultSet rs, String username, String ssn, String email) {
 		
 		try {
 			
 			while (rs.next()) {
 				
-				if(username.equals(rs.getString("username"))) {
+				if (username.equals(rs.getString("username"))) {
 					
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
@@ -132,19 +132,27 @@ public class SignupController {
 					alert.showAndWait();
 					return true;
 					
-				} else if(ssn.equals("\\d{3}-?\\d{2}-?\\d{4}")){
-					
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText(null);
-					alert.setContentText("Your ssn is not correct");
-					alert.showAndWait();
-					return true;
-					
-				}else if (ssn.equals(rs.getString("ssn"))) {
+				}  else if (ssn.equals(rs.getString("ssn"))) {
 					
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Your ssn is already exist");
+					alert.showAndWait();
+					return true;
+					
+				} else if (!ssn.matches("^\\d{3}-\\d{2}-\\d{4}$")){
+					
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Your ssn form is not correct");
+					alert.showAndWait();
+					return true;
+										
+				} else if (!email.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")) {
+					
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Your email form is not correct");
 					alert.showAndWait();
 					return true;
 				}
@@ -157,51 +165,4 @@ public class SignupController {
 		
 		return false;
 	}
-	
-	/*
-	public boolean isSsn(String ssnNum) {
-		int len = ssnNum.length();
-		
-		if(len != 9) {
-			errdef = "Number of digits not matching for SSN";
-			return false;
-		}
-		
-		if (ssnNum.startsWith("000") || ssnNum.startsWith("666") ||
-				ssnNum.startsWith("9") || ssnNum.endsWith("0000") ||
-				ssnNum.startsWith("00",3)) {
-			errdef = "Invalid digits for SSN";
-			return false;
-		}
-		
-		try {
-			for (int i=0; i < strlen; i++) 
-				 Integer.parseInt(String.valueOf(ssnnumber.charAt(i)));
-		} catch (Exception e) {
-			errdef = "Non Digit Values for SSN";
-			return false;
-		}
-		errdef = "The SSN is valid";
-		return true;
-	}
-	
-	public boolean isEamil(String[] emailChar) {
-		final String EMAIL_PATTERN =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-		
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-			 
-		  Matcher matcher = pattern.matcher(emailChar);
-		  if (matcher.matches() == false) {
-			  errdef = "Unable to read email";
-			  return false;
-		  }
-			  
-		errdef = "The email is valid";
-		return true;
-		
-	}
-	*/
-
-
 }

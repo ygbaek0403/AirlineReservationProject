@@ -46,7 +46,7 @@ public class Main extends Application {
     }
 
     
-    private static void showLoginView() throws IOException {
+    public static void showLoginView() throws IOException {
     	
     	FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(Main.class.getResource("loginView/LoginView.fxml"));
@@ -56,6 +56,40 @@ public class Main extends Application {
 
     }
     
+    public static void showAdminView() throws IOException {
+    	
+    	FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
+		mainLayout = loader.load();
+    	Scene scene = new Scene(mainLayout);
+    	primaryStage.centerOnScreen();
+    	primaryStage.setScene(scene);
+    	
+		
+    }
+    
+    public static void showUserView() throws IOException {
+    	
+    	FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(Main.class.getResource("mainView/UserView.fxml"));
+		mainLayout = loader.load();
+    	Scene scene = new Scene(mainLayout);
+    	primaryStage.centerOnScreen();
+    	primaryStage.setScene(scene);
+
+    }
+    
+    public static void showMyTrip() throws IOException {
+    	
+    	FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(Main.class.getResource("mainView/MyTrips.fxml"));
+    	mainLayout = loader.load();
+    	Scene scene = new Scene(mainLayout);
+    	primaryStage.centerOnScreen();
+    	primaryStage.setScene(scene);
+
+    }
+   
     
 
     

@@ -72,7 +72,17 @@ public class MyTripsController implements Initializable {
 	private String pw = "iin";
 	
 
-
+	@FXML
+	private void goBack() {
+		
+		try {
+			Main.showAdminView();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
     public ObservableList<Ticket> getFlights(String query) throws SQLException {
 		
     	
@@ -142,19 +152,6 @@ public class MyTripsController implements Initializable {
 			conn.close();
 		}
 	}
-
-	
-	@FXML
-	private void goBack() throws IOException {
-		
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
-		mainLayout = loader.load();
-		Scene scene = new Scene(mainLayout);
-		primaryStage.setScene(scene);
-		
-	}
-
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
