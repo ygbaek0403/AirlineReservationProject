@@ -548,7 +548,7 @@ public class AdminViewController implements Initializable {
 	
 	@FXML
 	private void editFlight() throws IOException {
-		
+		//
 		try {
 
 			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
