@@ -130,7 +130,7 @@ public class EditFlightController implements Initializable {
 				
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText(null);
-				alert.setContentText("The flight is succefully registered");
+				alert.setContentText("The flight is succefully edited");
 				alert.showAndWait();
 				
 			}
@@ -138,8 +138,8 @@ public class EditFlightController implements Initializable {
 			
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
-
+			e.printStackTrace();
+			
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Check your fields.");

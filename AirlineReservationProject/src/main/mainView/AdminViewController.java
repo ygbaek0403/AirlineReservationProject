@@ -65,6 +65,8 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private TableColumn<Flight, String> priceColumn;
 	@FXML
+	private TableColumn<Flight, Integer> capacityColumn;
+	@FXML
 	private TextField flyingFromTF;
 	@FXML
 	private TextField flyingToTF;
@@ -93,8 +95,10 @@ public class AdminViewController implements Initializable {
 		return flightTable.getSelectionModel().getSelectedItem();
 	}
 	
-    public ObservableList<Flight> getFlights(String query) throws SQLException {
-		
+    public ObservableList<Flight> getFlights() throws SQLException {
+
+    	String query = "select * from flights";
+
 		Connection conn = null;
 		
     	ObservableList<Flight> flights = FXCollections.observableArrayList();
@@ -416,6 +420,7 @@ public class AdminViewController implements Initializable {
     		}
     		
     		flightTable.setItems(flights);
+    		
     	} else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && departureDateDP.getValue() == null && !(arrivalDateDP.getValue() == null)) {
     		
     		String query = "select * from flights where departurecity like ? and arrivalcity like ? and arrivaldate = ?";
@@ -528,6 +533,7 @@ public class AdminViewController implements Initializable {
     		
     		flightTable.setItems(flights);
     	}            
+		initialize(null, null);
 	}	
 	 
 	@FXML
@@ -544,11 +550,12 @@ public class AdminViewController implements Initializable {
 		Scene scene = new Scene(mainLayout);
 		addDialogStage.setScene(scene);
 		addDialogStage.showAndWait();
+		initialize(null, null);
 	}
 	
 	@FXML
 	private void editFlight() throws IOException {
-		//
+		
 		try {
 
 			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
@@ -592,7 +599,7 @@ public class AdminViewController implements Initializable {
 			alert.showAndWait();
 			
 		}
-		
+		initialize(null, null);
 	}
 	
 	@FXML
@@ -631,6 +638,7 @@ public class AdminViewController implements Initializable {
 	
 			conn.close();
 		}
+		initialize(null, null);
 	}
 	
 	@FXML
@@ -649,6 +657,7 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private void addToTrip() throws SQLException {
 		
+		int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
 		String flightNumber = flightTable.getSelectionModel().getSelectedItem().getFlightNumber();
 		String departureCity = flightTable.getSelectionModel().getSelectedItem().getDepartureCity();
 		String departureState = flightTable.getSelectionModel().getSelectedItem().getDepartureState();
@@ -673,35 +682,53 @@ public class AdminViewController implements Initializable {
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			Statement stmt = conn.createStatement();
-			String query = "select flightNumber from tickets where " + idCustomer;
+			String query = "select ticket_flight from tickets where ticket_customer = " + idCustomer;
 			ResultSet rs = stmt.executeQuery(query);
 			
-			if(isDuplicate(rs, flightNumber) == false) {
+			if(isDuplicate(rs, idFlight) == false) {
 				
-				String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`, `ticket_customer`, `ticket_flight`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-				pstmt = conn.prepareStatement(queryInsert);
-				pstmt.setString(1, flightNumber);
-				pstmt.setString(2, departureCity);
-				pstmt.setString(3, departureState);
-				pstmt.setString(4, arrivalCity);
-				pstmt.setString(5, arrivalState);
-				pstmt.setDate(6, Date.valueOf(departureDate));
-				pstmt.setString(7, departureTime);
-				pstmt.setDate(8, Date.valueOf(arrivalDate));
-				pstmt.setString(9, arrivalTime);
-				pstmt.setString(10, duration);
-				pstmt.setString(11, price);
-				pstmt.setString(12, "" + capacity);
-				pstmt.setString(13, idCustomer);
-				pstmt.setString(14, "" + idFlight);
+				if (capacity == 0) {
+					
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("The flight is already full");
+					alert.showAndWait();
 				
-				
-				pstmt.executeUpdate();
-				
-				alert.setTitle("Information Dialog");
-				alert.setHeaderText(null);
-				alert.setContentText("The flight is succefully added to my trip");
-				alert.showAndWait();
+				} else {
+					
+					capacity = capacity - 1;
+					
+					String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`, `ticket_customer`, `ticket_flight`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					pstmt = conn.prepareStatement(queryInsert);
+					pstmt.setString(1, flightNumber);
+					pstmt.setString(2, departureCity);
+					pstmt.setString(3, departureState);
+					pstmt.setString(4, arrivalCity);
+					pstmt.setString(5, arrivalState);
+					pstmt.setDate(6, Date.valueOf(departureDate));
+					pstmt.setString(7, departureTime);
+					pstmt.setDate(8, Date.valueOf(arrivalDate));
+					pstmt.setString(9, arrivalTime);
+					pstmt.setString(10, duration);
+					pstmt.setString(11, price);
+					pstmt.setString(12, "" + capacity);
+					pstmt.setString(13, idCustomer);
+					pstmt.setString(14, "" + idFlight);
+					
+					pstmt.executeUpdate();
+					
+					String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `capacity`= ? WHERE `idflight`= ?";
+					pstmt = conn.prepareStatement(queryUpdate);
+					pstmt.setString(1, "" + capacity);
+					pstmt.setString(2, "" + idFlight);
+					pstmt.executeUpdate();
+					
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("The flight is succefully added to my trip");
+					alert.showAndWait();
+				}
+
 			}
 			
 		} catch (Exception e) {
@@ -716,20 +743,21 @@ public class AdminViewController implements Initializable {
 		} finally {
 			
 			conn.close();
-		}					
+		}				
+		initialize(null, null);
 	}
 	
 
 
 	
 
-	public boolean isDuplicate(ResultSet rs, String flightNumber) {
+	public boolean isDuplicate(ResultSet rs, int idFlight) {
 		
 		try {
 			
 			while (rs.next()) {
 				
-				if(flightNumber.equals(rs.getString("flightnumber"))) {
+				if(idFlight == rs.getInt("ticket_flight")) {
 					
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
@@ -764,13 +792,12 @@ public class AdminViewController implements Initializable {
 		arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("arrivalTime"));
 		durationColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("duration"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("price"));
+		capacityColumn.setCellValueFactory(new PropertyValueFactory<Flight, Integer>("capacity"));
 		
 		flightTable.setEditable(true);
 
-		String query = "select * from flights where capacity != 0";
-
-		try {
-			flightTable.setItems(getFlights(query));
+				try {
+			flightTable.setItems(getFlights());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
