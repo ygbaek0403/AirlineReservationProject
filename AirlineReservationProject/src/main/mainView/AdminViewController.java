@@ -10,12 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import classes.Flight;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,6 +28,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -80,6 +80,8 @@ public class AdminViewController implements Initializable {
 	private PreparedStatement pstmt;
 	
 	Alert alert = new Alert(AlertType.INFORMATION);
+	Alert alertConfirmation = new Alert(AlertType.CONFIRMATION);
+
 
 
 	private static Stage primaryStage;
@@ -353,7 +355,6 @@ public class AdminViewController implements Initializable {
     	    
     		try {
     			
-    			String flyingFrom = flyingFromTF.getText() + "%";
     			String flyingTo = flyingToTF.getText() + "%";
         	
     			String departureDate = "" + departureDateDP.getValue();
@@ -391,8 +392,7 @@ public class AdminViewController implements Initializable {
     		try {
     			
     			String flyingFrom = flyingFromTF.getText() + "%";
-    			String flyingTo = flyingToTF.getText() + "%";
-        	
+    			
     			String departureDate = "" + departureDateDP.getValue();
     			String arrivalDate = "" + arrivalDateDP.getValue();
         		
@@ -430,7 +430,6 @@ public class AdminViewController implements Initializable {
     			String flyingFrom = flyingFromTF.getText() + "%";
     			String flyingTo = flyingToTF.getText() + "%";
         	
-    			String departureDate = "" + departureDateDP.getValue();
     			String arrivalDate = "" + arrivalDateDP.getValue();
         		
     			conn = DriverManager.getConnection(url, id, pw);
@@ -468,8 +467,7 @@ public class AdminViewController implements Initializable {
     			String flyingTo = flyingToTF.getText() + "%";
         	
     			String departureDate = "" + departureDateDP.getValue();
-    			String arrivalDate = "" + arrivalDateDP.getValue();
-        		
+    			
     			conn = DriverManager.getConnection(url, id, pw);
     			
     			pstmt = conn.prepareStatement(query);
@@ -533,7 +531,7 @@ public class AdminViewController implements Initializable {
     		
     		flightTable.setItems(flights);
     	}            
-		initialize(null, null);
+		
 	}	
 	 
 	@FXML
@@ -611,20 +609,32 @@ public class AdminViewController implements Initializable {
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			
-			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
-			String queryDelete = "DELETE FROM `dbo_airline`.`flights` WHERE `idflight`= ?";
-			pstmt = conn.prepareStatement(queryDelete);
-			pstmt.setString(1, "" + idFlight);
+			alertConfirmation.setTitle("Confirmation Dialog");
+			alertConfirmation.setHeaderText(null);
+			alertConfirmation.setContentText("Are you sure to delete? \nIt will affect to customer's tickes");
+			Optional <ButtonType> action = alertConfirmation.showAndWait();
 			
-			pstmt.executeUpdate();
-			
-			alert.setTitle("Information Dialog");
-			alert.setHeaderText(null);
-			alert.setContentText("The flight is succefully deleted");
-			alert.showAndWait();
+			if(action.get() == ButtonType.OK) {
 
-			initialize(null, null);
+				int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
+				String queryDelete = "DELETE FROM `dbo_airline`.`flights` WHERE `idflight`= ?";
+				pstmt = conn.prepareStatement(queryDelete);
+				pstmt.setString(1, "" + idFlight);
+				
+				pstmt.executeUpdate();
+				
+				queryDelete = "DELETE FROM `dbo_airline`.`tickets` WHERE `ticket_flight`= ?";
+				pstmt = conn.prepareStatement(queryDelete);
+				pstmt.setString(1, "" + idFlight);
 			
+				pstmt.executeUpdate();
+				
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("The flight is succefully deleted");
+				alert.showAndWait();
+
+			}
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -657,35 +667,36 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private void addToTrip() throws SQLException {
 		
-		int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
-		String flightNumber = flightTable.getSelectionModel().getSelectedItem().getFlightNumber();
-		String departureCity = flightTable.getSelectionModel().getSelectedItem().getDepartureCity();
-		String departureState = flightTable.getSelectionModel().getSelectedItem().getDepartureState();
-		String arrivalCity = flightTable.getSelectionModel().getSelectedItem().getArrivalCity();
-		String arrivalState = flightTable.getSelectionModel().getSelectedItem().getArrivalState();
-		LocalDate departureDate = flightTable.getSelectionModel().getSelectedItem().getDepartureDate();
-		String departureTime =flightTable.getSelectionModel().getSelectedItem().getDepartureTime();
-		LocalDate arrivalDate = flightTable.getSelectionModel().getSelectedItem().getArrivalDate();
-		String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
-		String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
-		String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
-		int capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
-		
-		String idCustomer = "" + LoginController.getIdCustomer();
-		idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
-		
 		Connection conn = null;
+		String idCustomer = "" + LoginController.getIdCustomer();
 		
-
 		try {
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			
-			Statement stmt = conn.createStatement();
-			String query = "select ticket_flight from tickets where ticket_customer = " + idCustomer;
-			ResultSet rs = stmt.executeQuery(query);
+			int idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
+			String flightNumber = flightTable.getSelectionModel().getSelectedItem().getFlightNumber();
+			String departureCity = flightTable.getSelectionModel().getSelectedItem().getDepartureCity();
+			String departureState = flightTable.getSelectionModel().getSelectedItem().getDepartureState();
+			String arrivalCity = flightTable.getSelectionModel().getSelectedItem().getArrivalCity();
+			String arrivalState = flightTable.getSelectionModel().getSelectedItem().getArrivalState();
+			LocalDate departureDate = flightTable.getSelectionModel().getSelectedItem().getDepartureDate();
+			String departureTime =flightTable.getSelectionModel().getSelectedItem().getDepartureTime();
+			LocalDate arrivalDate = flightTable.getSelectionModel().getSelectedItem().getArrivalDate();
+			String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
+			String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
+			String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
+			int capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
 			
-			if(isDuplicate(rs, idFlight) == false) {
+			idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
+					
+			String query = "select ticket_flight from tickets where ticket_customer = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idCustomer);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (isFlightDuplicate(rs, idFlight) == false) {
 				
 				if (capacity == 0) {
 					
@@ -694,6 +705,45 @@ public class AdminViewController implements Initializable {
 					alert.setContentText("The flight is already full");
 					alert.showAndWait();
 				
+				} else if (isDateDuplicate()) {
+					
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Be aware that you have another flight in the same date");
+					alert.showAndWait();
+					
+					capacity = capacity - 1;
+					
+					String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`, `ticket_customer`, `ticket_flight`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					pstmt = conn.prepareStatement(queryInsert);
+					pstmt.setString(1, flightNumber);
+					pstmt.setString(2, departureCity);
+					pstmt.setString(3, departureState);
+					pstmt.setString(4, arrivalCity);
+					pstmt.setString(5, arrivalState);
+					pstmt.setDate(6, Date.valueOf(departureDate));
+					pstmt.setString(7, departureTime);
+					pstmt.setDate(8, Date.valueOf(arrivalDate));
+					pstmt.setString(9, arrivalTime);
+					pstmt.setString(10, duration);
+					pstmt.setString(11, price);
+					pstmt.setString(12, "" + capacity);
+					pstmt.setString(13, idCustomer);
+					pstmt.setString(14, "" + idFlight);
+					
+					pstmt.executeUpdate();
+					
+					String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `capacity`= ? WHERE `idflight`= ?";
+					pstmt = conn.prepareStatement(queryUpdate);
+					pstmt.setString(1, "" + capacity);
+					pstmt.setString(2, "" + idFlight);
+					pstmt.executeUpdate();
+					
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("The flight is succefully added to my trip");
+					alert.showAndWait();
+					
 				} else {
 					
 					capacity = capacity - 1;
@@ -748,10 +798,40 @@ public class AdminViewController implements Initializable {
 	}
 	
 
-
+	public boolean isDateDuplicate() {
+		
+		try {
+			
+			Connection conn = null;
+			String idCustomer = "" + LoginController.getIdCustomer();
+			
+			conn = DriverManager.getConnection(url, id, pw);
+			LocalDate ld = flightTable.getSelectionModel().getSelectedItem().getDepartureDate();
+			
+			String query = "select departuredate, arrivaldate from tickets where ticket_customer = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idCustomer);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+					
+				if (rs.getDate("departuredate").toLocalDate().equals(ld) || rs.getDate("arrivaldate").toLocalDate().equals(ld)) {
+					
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		
+		}
+		
+		return false;
+		
+	}
 	
 
-	public boolean isDuplicate(ResultSet rs, int idFlight) {
+	public boolean isFlightDuplicate(ResultSet rs, int idFlight) {
 		
 		try {
 			
@@ -796,7 +876,7 @@ public class AdminViewController implements Initializable {
 		
 		flightTable.setEditable(true);
 
-				try {
+		try {
 			flightTable.setItems(getFlights());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

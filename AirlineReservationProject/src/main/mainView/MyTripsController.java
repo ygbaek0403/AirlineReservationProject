@@ -61,6 +61,7 @@ public class MyTripsController implements Initializable {
 	private TableColumn<Ticket, String> priceColumn;
 
 	private PreparedStatement pstmt;
+	private PreparedStatement pstmt2;
 
 	Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -121,27 +122,28 @@ public class MyTripsController implements Initializable {
 		Connection conn = null;
 		
 		try {
-			
+
 			conn = DriverManager.getConnection(url, id, pw);
-			
+
 			int idTicket = flightTable.getSelectionModel().getSelectedItem().getIdTicket();
 			String queryDelete = "DELETE FROM `dbo_airline`.`tickets` WHERE `idticket`= ?";
 			pstmt = conn.prepareStatement(queryDelete);
 			pstmt.setString(1, "" + idTicket);
 			
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();			
 			
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("The flight is succefully deleted");
 			alert.showAndWait();
-
+			
+			addCapacity();
 			initialize(null, null);
 			
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
-
+			e.printStackTrace();
+			
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Select a flight");
@@ -153,6 +155,39 @@ public class MyTripsController implements Initializable {
 		}
 	}
 
+	private void addCapacity() {
+		
+	Connection conn = null;
+		
+		try {
+
+			conn = DriverManager.getConnection(url, id, pw);
+			
+			String idFlight = flightTable.getSelectionModel().getSelectedItem().getTicket_flight();
+			String query = "SELECT capacity FROM `dbo_airline`.`flights` WHERE idFlight = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idFlight);
+			
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			
+			int capacity = rs.getInt("capacity");
+			
+			capacity = capacity + 1;
+			
+			String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `capacity`= ? WHERE `idflight`= ?";
+			pstmt = conn.prepareStatement(queryUpdate);
+			pstmt.setString(1, "" + capacity);
+			pstmt.setString(2, "" + idFlight);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} 
+		
+	}
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		

@@ -1,5 +1,7 @@
 package main;
 	
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -53,7 +55,8 @@ public class Main extends Application {
     	mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
     	primaryStage.setScene(scene);
-
+    	primaryStage.centerOnScreen();
+    	
     }
     
     public static void showAdminView() throws IOException {
@@ -62,10 +65,9 @@ public class Main extends Application {
     	loader.setLocation(Main.class.getResource("mainView/AdminView.fxml"));
 		mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
-    	primaryStage.centerOnScreen();
     	primaryStage.setScene(scene);
+    	primaryStage.centerOnScreen();
     	
-		
     }
     
     public static void showUserView() throws IOException {
@@ -74,9 +76,9 @@ public class Main extends Application {
     	loader.setLocation(Main.class.getResource("mainView/UserView.fxml"));
 		mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
-    	primaryStage.centerOnScreen();
     	primaryStage.setScene(scene);
-
+    	primaryStage.centerOnScreen();
+    	
     }
     
     public static void showMyTrip() throws IOException {
@@ -85,9 +87,9 @@ public class Main extends Application {
     	loader.setLocation(Main.class.getResource("mainView/MyTrips.fxml"));
     	mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
-    	primaryStage.centerOnScreen();
     	primaryStage.setScene(scene);
-
+    	primaryStage.centerOnScreen();
+    	
     }
    
     

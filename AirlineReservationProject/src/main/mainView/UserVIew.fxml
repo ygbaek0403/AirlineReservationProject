@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainView.AdminViewController">
       <left>
       <VBox alignment="CENTER" prefHeight="550.0" prefWidth="156.0" BorderPane.alignment="CENTER">
          <children>
@@ -42,7 +42,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <DatePicker fx:id="departDateDP">
+            <DatePicker fx:id="departureDateDP">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
@@ -52,12 +52,12 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
-            <DatePicker fx:id="returnDateDP">
+            <DatePicker fx:id="arrivalDateDP">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </DatePicker>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Search" />
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#goSearch" text="Search" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -67,8 +67,8 @@
    <top>
       <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-            <Button mnemonicParsing="false" text="Logout" />
-            <Button mnemonicParsing="false" text="My trips" />
+            <Button mnemonicParsing="false" onAction="#goLogout" text="Logout" />
+            <Button mnemonicParsing="false" onAction="#goToTrip" text="My trips" />
         </items>
          <opaqueInsets>
             <Insets />
@@ -86,19 +86,21 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TableView prefHeight="552.0" prefWidth="890.0">
+            <TableView fx:id="flightTable" prefHeight="552.0" prefWidth="890.0">
               <columns>
-                <TableColumn prefWidth="50.0" text="Flight" />
-                <TableColumn prefWidth="100.0" text="Departure City" />
-                  <TableColumn prefWidth="50.0" text="State" />
-                  <TableColumn prefWidth="100.0" text="Arrival City" />
-                  <TableColumn minWidth="0.0" prefWidth="50.0" text="State" />
-                  <TableColumn minWidth="4.0" prefWidth="105.0" text="Departure Date" />
-                  <TableColumn minWidth="4.0" prefWidth="61.0" text="Time" />
-                  <TableColumn minWidth="0.0" prefWidth="105.0" text="Arrival Date" />
-                  <TableColumn minWidth="0.0" prefWidth="61.0" text="Time" />
-                  <TableColumn minWidth="9.0" prefWidth="60.0" text="Duration" />
-                  <TableColumn minWidth="0.0" prefWidth="60.0" text="Price" />
+                  <TableColumn fx:id="idFlightColumn" prefWidth="40.0" text="ID" />
+                <TableColumn fx:id="flightNumberColumn" prefWidth="50.0" text="Flight" />
+                <TableColumn fx:id="departureCityColumn" prefWidth="100.0" text="Departure City" />
+                  <TableColumn fx:id="departureStateColumn" prefWidth="50.0" text="State" />
+                  <TableColumn fx:id="arrivalCityColumn" prefWidth="100.0" text="Arrival City" />
+                  <TableColumn fx:id="arrivalStateColumn" minWidth="0.0" prefWidth="50.0" text="State" />
+                  <TableColumn fx:id="departureDateColumn" minWidth="4.0" prefWidth="105.0" text="Departure Date" />
+                  <TableColumn fx:id="departureTimeColumn" minWidth="4.0" prefWidth="61.0" text="Time" />
+                  <TableColumn fx:id="arrivalDateColumn" minWidth="0.0" prefWidth="105.0" text="Arrival Date" />
+                  <TableColumn fx:id="arrivalTimeColumn" minWidth="0.0" prefWidth="61.0" text="Time" />
+                  <TableColumn fx:id="durationColumn" minWidth="9.0" prefWidth="60.0" text="Duration" />
+                  <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="60.0" text="Price" />
+                  <TableColumn fx:id="capacityColumn" minWidth="0.0" prefWidth="60.0" text="capacity" />
               </columns>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -106,7 +108,7 @@
             </TableView>
             <HBox alignment="TOP_RIGHT" prefHeight="0.0" prefWidth="990.0">
                <children>
-                  <Button mnemonicParsing="false" text="Add to my trips" />
+                  <Button mnemonicParsing="false" onAction="#addToTrip" text="Add to my trips" />
                </children>
                <VBox.margin>
                   <Insets />
