@@ -99,7 +99,7 @@ public class MyTripsController implements Initializable {
 				
 			while (rs.next()) {
 	            
-				tickets.add(new Ticket(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15)));
+				tickets.add(new Ticket(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13)), rs.getString(14), rs.getString(15)));
 			}
 
 	        } catch (Exception e) {

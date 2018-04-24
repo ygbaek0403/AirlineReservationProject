@@ -108,7 +108,7 @@ public class AdminViewController implements Initializable {
 				
 			while (rs.next()) {
 	            
-				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13)));
+				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
 			}
 
 	        } catch (Exception e) {
@@ -127,24 +127,25 @@ public class AdminViewController implements Initializable {
 	@FXML
 	private void goSearch() throws SQLException {
 		 
-		String query = "select * from flights";
 		
 		Connection conn = null;
 		
     	ObservableList<Flight> flights = FXCollections.observableArrayList();
     	
-    	if (flyingFromTF.getText().equals("") && flyingToTF.getText().equals("")) {
+    	if (flyingFromTF.getText().equals("") && flyingToTF.getText().equals("") && departureDateDP.getValue() == null && arrivalDateDP.getValue() == null) {
+    		
+    		String query = "select * from flights";
     		
         	try {
     			
     			conn = DriverManager.getConnection(url, id, pw);
     				
-    			Statement stmt = conn.createStatement();
-    			ResultSet rs = stmt.executeQuery(query);
+    			pstmt = conn.prepareStatement(query);
+    			ResultSet rs = pstmt.executeQuery();
     				
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13)));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
     			}
 
         	} catch (Exception e) {
@@ -158,58 +159,375 @@ public class AdminViewController implements Initializable {
         		
     		flightTable.setItems(flights);
     		
-    	} else if (!(flyingFromTF.getText().equals("") && flyingToTF.getText().equals(""))) {
+    	} else if (!(flyingFromTF.getText().equals("")) && flyingToTF.getText().equals("") && departureDateDP.getValue() == null && arrivalDateDP.getValue() == null) {
     		
-    		
-    		String flyingFrom;
-    		String flyingTo;
-    		String departureDate;
-    		String arrivalDate;
-    		
+    		String query = "select * from flights where departurecity like ?";
+    	    
     		try {
     			
-    			flyingFrom = flyingFromTF.getText() + "%";
-    			flyingTo = flyingToTF.getText() + "%";
-    			departureDate = departureDateDP.getValue().toString();
-    			arrivalDate = arrivalDateDP.getValue().toString();
+    			String flyingFrom = flyingFromTF.getText() + "%";
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
     			
-    			if (flyingFrom.isEmpty() || flyingTo.isEmpty() || departureDate.isEmpty() || arrivalDate.isEmpty()) {
-    		
-    				alert.setTitle("Information Dialog");
-    				alert.setHeaderText(null);
-    				alert.setContentText("Check the fields");
-    				alert.showAndWait();
-    				
-    			} else if (!(flyingFrom.isEmpty() && flyingTo.isEmpty())) {
-    				
-
-    				
-    				
-    			} else {
-    				
-    				conn = DriverManager.getConnection(url, id, pw);
-    				query = "select * from flights where departurecity like ? or arrivalcity like ?";
-    				pstmt = conn.prepareStatement(query);
-    				pstmt.setString(1, flyingFrom);
-    				pstmt.setString(2, flyingTo);
-    				
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingFrom);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
     			}
     			
     		} catch (Exception e) {
     			
     			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
     		}
-    	
     		
+    		flightTable.setItems(flights);
+    		
+    	} else if (flyingFromTF.getText().equals("") && !(flyingToTF.getText().equals("")) && departureDateDP.getValue() == null && arrivalDateDP.getValue() == null) {
+    		
+    		String query = "select * from flights where arrivalcity like ?";
+    	    
     		try {
     			
-    			flightTable.setItems(getFlights(query));
+    			String flyingTo = flyingToTF.getText() + "%";
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
     			
-    		} catch (SQLException e) {
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingTo);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
     			
     			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
     		}
-    	}
+    		
+    		flightTable.setItems(flights);
+    	}  else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && departureDateDP.getValue() == null && arrivalDateDP.getValue() == null) {
+    		
+    		String query = "select * from flights where departurecity like ? and arrivalcity like ?";
+    	    
+    		try {
+    			
+    			String flyingFrom = flyingFromTF.getText() + "%";
+    			String flyingTo = flyingToTF.getText() + "%";
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingFrom);
+    			pstmt.setString(2, flyingTo);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    		
+    	} else if (flyingFromTF.getText().equals("") && flyingToTF.getText().equals("") && !(departureDateDP.getValue() == null) && arrivalDateDP.getValue() == null) {
+    		
+    		String query = "select * from flights where departuredate = ?";
+    		
+        	try {
+    			
+        		String departureDate = "" + departureDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    				
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, departureDate);
+    			ResultSet rs = pstmt.executeQuery();    	
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+
+        	} catch (Exception e) {
+    	        	
+        		e.printStackTrace();
+    	        	
+        	} finally {
+    	        	
+        		conn.close();
+        	}
+        		
+    		flightTable.setItems(flights);
+    		
+    	} else if (flyingFromTF.getText().equals("") && flyingToTF.getText().equals("") && departureDateDP.getValue() == null && !(arrivalDateDP.getValue() == null)) {
+    		
+    		String query = "select * from flights where arrivaldate = ?";
+    	    
+    		try {
+    			
+    			String arrivalDate = "" + arrivalDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, arrivalDate);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    		
+    	} else if (flyingFromTF.getText().equals("") && flyingToTF.getText().equals("") && !(departureDateDP.getValue() == null) && !(arrivalDateDP.getValue() == null)) {
+    		
+    		String query = "select * from flights where departuredate = ? and arrivaldate = ?";
+    	    
+    		try {
+    			
+    			String departureDate = "" + departureDateDP.getValue();
+    			String arrivalDate = "" + arrivalDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, departureDate);
+    			pstmt.setString(2, arrivalDate);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    		
+    	} else if (flyingFromTF.getText().equals("") && !(flyingToTF.getText().equals("")) && !(departureDateDP.getValue() == null) && !(arrivalDateDP.getValue() == null)) {
+    		
+    		String query = "select * from flights where arrivalcity like ? and departuredate = ? and arrivaldate = ?";
+    	    
+    		try {
+    			
+    			String flyingFrom = flyingFromTF.getText() + "%";
+    			String flyingTo = flyingToTF.getText() + "%";
+        	
+    			String departureDate = "" + departureDateDP.getValue();
+    			String arrivalDate = "" + arrivalDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingTo);
+    			pstmt.setString(2, departureDate);
+    			pstmt.setString(3, arrivalDate);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    		
+    	} else if (!(flyingFromTF.getText().equals("")) && flyingToTF.getText().equals("") && !(departureDateDP.getValue() == null) && !(arrivalDateDP.getValue() == null)) {
+    		
+    		String query = "select * from flights where departurecity like ? and departuredate = ? and arrivaldate = ?";
+    	    
+    		try {
+    			
+    			String flyingFrom = flyingFromTF.getText() + "%";
+    			String flyingTo = flyingToTF.getText() + "%";
+        	
+    			String departureDate = "" + departureDateDP.getValue();
+    			String arrivalDate = "" + arrivalDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingFrom);
+    			pstmt.setString(2, departureDate);
+    			pstmt.setString(3, arrivalDate);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    	} else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && departureDateDP.getValue() == null && !(arrivalDateDP.getValue() == null)) {
+    		
+    		String query = "select * from flights where departurecity like ? and arrivalcity = ? and arrivaldate = ?";
+    	    
+    		try {
+    			
+    			String flyingFrom = flyingFromTF.getText() + "%";
+    			String flyingTo = flyingToTF.getText() + "%";
+        	
+    			String departureDate = "" + departureDateDP.getValue();
+    			String arrivalDate = "" + arrivalDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingFrom);
+    			pstmt.setString(2, flyingTo);
+    			pstmt.setString(3, arrivalDate);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    		
+    	} else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && !(departureDateDP.getValue() == null) && arrivalDateDP.getValue() == null) {
+    		
+    		String query = "select * from flights where departurecity like ? and arrivalcity = ? and departuredate = ?";
+    	    
+    		try {
+    			
+    			String flyingFrom = flyingFromTF.getText() + "%";
+    			String flyingTo = flyingToTF.getText() + "%";
+        	
+    			String departureDate = "" + departureDateDP.getValue();
+    			String arrivalDate = "" + arrivalDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingFrom);
+    			pstmt.setString(2, flyingTo);
+    			pstmt.setString(3, departureDate);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    		
+    	} else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && !(departureDateDP.getValue() == null) && !(arrivalDateDP.getValue() == null)) {
+    		
+    		String query = "select * from flights where departurecity like ? and arrivalcity = ? and departuredate = ? and arrivaldate = ?";
+    	    
+    		try {
+    			
+    			String flyingFrom = flyingFromTF.getText() + "%";
+    			String flyingTo = flyingToTF.getText() + "%";
+        	
+    			String departureDate = "" + departureDateDP.getValue();
+    			String arrivalDate = "" + arrivalDateDP.getValue();
+        		
+    			conn = DriverManager.getConnection(url, id, pw);
+    			
+    			pstmt = conn.prepareStatement(query);
+    			pstmt.setString(1, flyingFrom);
+    			pstmt.setString(2, flyingTo);
+    			pstmt.setString(3, departureDate);
+    			pstmt.setString(4, arrivalDate);
+    			ResultSet rs = pstmt.executeQuery();
+    			
+    			
+    			while (rs.next()) {
+    	            
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    			}
+    			
+    		} catch (Exception e) {
+    			
+    			e.printStackTrace();
+    			
+    		} finally {
+    			
+    			conn.close();
+    		}
+    		
+    		flightTable.setItems(flights);
+    	}            
 	}	
 	 
 	@FXML
@@ -245,7 +563,7 @@ public class AdminViewController implements Initializable {
 			String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
 			String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
 			String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
-			String capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
+			int capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
 				
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("mainView/EditFlight.fxml"));
@@ -342,7 +660,7 @@ public class AdminViewController implements Initializable {
 		String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
 		String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
 		String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
-		String capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
+		int capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
 		
 		String idCustomer = "" + LoginController.getIdCustomer();
 		idFlight = flightTable.getSelectionModel().getSelectedItem().getIdFlight();
@@ -373,7 +691,7 @@ public class AdminViewController implements Initializable {
 				pstmt.setString(9, arrivalTime);
 				pstmt.setString(10, duration);
 				pstmt.setString(11, price);
-				pstmt.setString(12, capacity);
+				pstmt.setString(12, "" + capacity);
 				pstmt.setString(13, idCustomer);
 				pstmt.setString(14, "" + idFlight);
 				
@@ -449,7 +767,7 @@ public class AdminViewController implements Initializable {
 		
 		flightTable.setEditable(true);
 
-		String query = "select * from flights";
+		String query = "select * from flights where capacity != 0";
 
 		try {
 			flightTable.setItems(getFlights(query));

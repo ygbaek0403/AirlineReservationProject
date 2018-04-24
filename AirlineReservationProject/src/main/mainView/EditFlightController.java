@@ -60,7 +60,7 @@ public class EditFlightController implements Initializable {
 	AdminViewController avc = new AdminViewController();
 	
 	
-	public void setFlight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String duration, String price, String capacity) {
+	public void setFlight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String duration, String price, int capacity) {
 		
 		this.idFlightTF.setText("" + idFlight);
 		this.flightNumberTF.setText(flightNumber);
@@ -74,7 +74,7 @@ public class EditFlightController implements Initializable {
 		this.arrivalTimeTF.setText(arrivalTime);
 		this.durationTF.setText(duration);
 		this.priceTF.setText(price);
-		this.capacityTF.setText(capacity);
+		this.capacityTF.setText("" + capacity);
 	}
 	
 	@FXML
@@ -82,7 +82,6 @@ public class EditFlightController implements Initializable {
 		
 		
 		String idFlight = idFlightTF.getText();
-		String flightNumber = flightNumberTF.getText();
 		String departureCity = departureCityTF.getText();
 		String departureState = departureStateTF.getText();
 		String arrivalCity = arrivalCityTF.getText();
@@ -101,48 +100,42 @@ public class EditFlightController implements Initializable {
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			
-			Statement stmt = conn.createStatement();
-			String query = "select flightNumber from flights";
-			ResultSet rs = stmt.executeQuery(query);
 			
-			if(isDuplicate(rs, flightNumber) == false) {
+			
+			if (departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || duration.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
 				
-				if (flightNumber.isEmpty() || departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || duration.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
-					
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText(null);
-					alert.setContentText("Check your fields.");
-					alert.showAndWait();
-					
-				} else {
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("Check your fields.");
+				alert.showAndWait();
+				
+			} else {
+		
+				String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `departureCity`= ?, `departureState`= ?, `arrivalCity`= ?, `arrivalState`= ?, `departureDate`= ?, `departureTime`= ?, `arrivalDate`= ?, `arrivalTime`= ?, `duration`= ?, `price`= ?, `capacity`= ? WHERE `idflight`= ?";
+				pstmt = conn.prepareStatement(queryUpdate);
+				pstmt.setString(1, departureCity);
+				pstmt.setString(2, departureState);
+				pstmt.setString(3, arrivalCity);
+				pstmt.setString(4, arrivalState);
+				pstmt.setString(5, departureDate);
+				pstmt.setString(6, departureTime);
+				pstmt.setString(7, arrivalDate);
+				pstmt.setString(8, arrivalTime);
+				pstmt.setString(9, duration);
+				pstmt.setString(10, price);
+				pstmt.setString(11, capacity);
+				pstmt.setString(12, idFlight);
 			
-					String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `idflight`= ?, `flightNumber`= ?, `departureCity`= ?, `departureState`= ?, `arrivalCity`= ?, `arrivalState`= ?, `departureDate`= ?, `departureTime`= ?, `arrivalDate`= ?, `arrivalTime`= ?, `duration`= ?, `price`= ?, `capacity`= ? WHERE `idflight`= ?";
-					pstmt = conn.prepareStatement(queryUpdate);
-					pstmt.setString(1, idFlight);
-					pstmt.setString(2, flightNumber);
-					pstmt.setString(3, departureCity);
-					pstmt.setString(4, departureState);
-					pstmt.setString(5, arrivalCity);
-					pstmt.setString(6, arrivalState);
-					pstmt.setString(7, departureDate);
-					pstmt.setString(8, departureTime);
-					pstmt.setString(9, arrivalDate);
-					pstmt.setString(10, arrivalTime);
-					pstmt.setString(11, duration);
-					pstmt.setString(12, price);
-					pstmt.setString(13, capacity);
-					pstmt.setString(14, idFlight);
-				//
-					pstmt.executeUpdate();
-					
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText(null);
-					alert.setContentText("The flight is succefully registered");
-					alert.showAndWait();
-					
-				}
-			
+				pstmt.executeUpdate();
+				
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("The flight is succefully registered");
+				alert.showAndWait();
+				
 			}
+		
+			
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());

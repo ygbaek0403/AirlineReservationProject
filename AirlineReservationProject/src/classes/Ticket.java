@@ -17,12 +17,12 @@ public class Ticket {
 	private SimpleStringProperty arrivalTime;
 	private SimpleStringProperty duration;
 	private SimpleStringProperty price;
-	private SimpleStringProperty capacity;
+	private SimpleIntegerProperty capacity;
 	private SimpleStringProperty ticket_customer;
 	private SimpleStringProperty ticket_flight;
 	
 	
-	public Ticket (int idTicket, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, String departureDate, String departureTime, String arrivalDate, String arrivalTime, String duration, String price, String capacity, String ticket_customer, String ticket_flight) {
+	public Ticket (int idTicket, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, String departureDate, String departureTime, String arrivalDate, String arrivalTime, String duration, String price, int capacity, String ticket_customer, String ticket_flight) {
 	
 		this.idTicket = new SimpleIntegerProperty(idTicket);
 		this.flightNumber = new SimpleStringProperty(flightNumber);
@@ -36,7 +36,7 @@ public class Ticket {
 		this.arrivalTime = new SimpleStringProperty(arrivalTime);
 		this.duration = new SimpleStringProperty(duration);
 		this.price = new SimpleStringProperty(price);	
-		this.capacity = new SimpleStringProperty(capacity);	
+		this.capacity = new SimpleIntegerProperty(capacity);	
 		this.ticket_customer = new SimpleStringProperty(ticket_customer);	
 		this.ticket_flight = new SimpleStringProperty(ticket_flight);		
 	}
@@ -137,11 +137,11 @@ public class Ticket {
 		this.price = price;
 	}
 	
-	public String getCapacity() {
+	public int getCapacity() {
 		return capacity.get();
 	}
 
-	public void setCapacity(SimpleStringProperty capacity) {
+	public void setCapacity(SimpleIntegerProperty capacity) {
 		this.capacity = capacity;
 	}
 
