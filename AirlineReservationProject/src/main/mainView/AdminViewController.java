@@ -418,7 +418,7 @@ public class AdminViewController implements Initializable {
     		flightTable.setItems(flights);
     	} else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && departureDateDP.getValue() == null && !(arrivalDateDP.getValue() == null)) {
     		
-    		String query = "select * from flights where departurecity like ? and arrivalcity = ? and arrivaldate = ?";
+    		String query = "select * from flights where departurecity like ? and arrivalcity like ? and arrivaldate = ?";
     	    
     		try {
     			
@@ -455,7 +455,7 @@ public class AdminViewController implements Initializable {
     		
     	} else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && !(departureDateDP.getValue() == null) && arrivalDateDP.getValue() == null) {
     		
-    		String query = "select * from flights where departurecity like ? and arrivalcity = ? and departuredate = ?";
+    		String query = "select * from flights where departurecity like ? and arrivalcity like ? and departuredate = ?";
     	    
     		try {
     			
@@ -492,7 +492,7 @@ public class AdminViewController implements Initializable {
     		
     	} else if (!(flyingFromTF.getText().equals("")) && !(flyingToTF.getText().equals("")) && !(departureDateDP.getValue() == null) && !(arrivalDateDP.getValue() == null)) {
     		
-    		String query = "select * from flights where departurecity like ? and arrivalcity = ? and departuredate = ? and arrivaldate = ?";
+    		String query = "select * from flights where departurecity like ? and arrivalcity like ? and departuredate = ? and arrivaldate = ?";
     	    
     		try {
     			
