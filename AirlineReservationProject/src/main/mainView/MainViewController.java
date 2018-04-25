@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 import main.Main;
 import main.loginView.LoginController;
 
-public class AdminViewController implements Initializable {
+public class MainViewController implements Initializable {
 
 	@FXML
 	private TableView<Flight> flightTable;
@@ -60,8 +60,6 @@ public class AdminViewController implements Initializable {
 	private TableColumn<Flight, LocalDate> arrivalDateColumn;
 	@FXML
 	private TableColumn<Flight, String> arrivalTimeColumn;
-	@FXML
-	private TableColumn<Flight, String> durationColumn;
 	@FXML
 	private TableColumn<Flight, String> priceColumn;
 	@FXML
@@ -114,7 +112,7 @@ public class AdminViewController implements Initializable {
 				
 			while (rs.next()) {
 	            
-				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
 			}
 
 	        } catch (Exception e) {
@@ -151,7 +149,7 @@ public class AdminViewController implements Initializable {
     				
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
 
         	} catch (Exception e) {
@@ -181,7 +179,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -211,7 +209,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -242,7 +240,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -272,7 +270,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
 
         	} catch (Exception e) {
@@ -302,7 +300,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -335,7 +333,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -371,7 +369,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -407,7 +405,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -443,7 +441,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -479,7 +477,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -517,7 +515,7 @@ public class AdminViewController implements Initializable {
     			
     			while (rs.next()) {
     	            
-    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13))));
+    				flights.add(new Flight(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toLocalDate(), rs.getString(8), rs.getDate(9).toLocalDate(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12))));
     			}
     			
     		} catch (Exception e) {
@@ -566,7 +564,6 @@ public class AdminViewController implements Initializable {
 			String departureTime =flightTable.getSelectionModel().getSelectedItem().getDepartureTime();
 			LocalDate arrivalDate = flightTable.getSelectionModel().getSelectedItem().getArrivalDate();
 			String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
-			String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
 			String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
 			int capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
 				
@@ -576,7 +573,7 @@ public class AdminViewController implements Initializable {
 			loader.load();
 			
 			EditFlightController efc = loader.getController();
-			efc.setFlight(idFlight, flightNumber, departureCity, departureState, arrivalCity, arrivalState, departureDate, departureTime, arrivalDate, arrivalTime, duration, price, capacity);
+			efc.setFlight(idFlight, flightNumber, departureCity, departureState, arrivalCity, arrivalState, departureDate, departureTime, arrivalDate, arrivalTime, price, capacity);
 		
 			Parent p = loader.getRoot();
 			Stage stage = new Stage();
@@ -585,7 +582,7 @@ public class AdminViewController implements Initializable {
 			
 		} catch(IOException e) { 
 			
-			Logger.getLogger(AdminViewController.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, e);
 			
 		} catch(Exception e) {
 			
@@ -684,7 +681,6 @@ public class AdminViewController implements Initializable {
 			String departureTime =flightTable.getSelectionModel().getSelectedItem().getDepartureTime();
 			LocalDate arrivalDate = flightTable.getSelectionModel().getSelectedItem().getArrivalDate();
 			String arrivalTime = flightTable.getSelectionModel().getSelectedItem().getArrivalTime();
-			String duration = flightTable.getSelectionModel().getSelectedItem().getDuration();
 			String price = flightTable.getSelectionModel().getSelectedItem().getPrice();
 			int capacity = flightTable.getSelectionModel().getSelectedItem().getCapacity();
 			
@@ -714,7 +710,7 @@ public class AdminViewController implements Initializable {
 					
 					capacity = capacity - 1;
 					
-					String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`, `ticket_customer`, `ticket_flight`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `price`, `capacity`, `ticket_customer`, `ticket_flight`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 					pstmt = conn.prepareStatement(queryInsert);
 					pstmt.setString(1, flightNumber);
 					pstmt.setString(2, departureCity);
@@ -725,11 +721,10 @@ public class AdminViewController implements Initializable {
 					pstmt.setString(7, departureTime);
 					pstmt.setDate(8, Date.valueOf(arrivalDate));
 					pstmt.setString(9, arrivalTime);
-					pstmt.setString(10, duration);
-					pstmt.setString(11, price);
-					pstmt.setString(12, "" + capacity);
-					pstmt.setString(13, idCustomer);
-					pstmt.setString(14, "" + idFlight);
+					pstmt.setString(10, price);
+					pstmt.setString(11, "" + capacity);
+					pstmt.setString(12, idCustomer);
+					pstmt.setString(13, "" + idFlight);
 					
 					pstmt.executeUpdate();
 					
@@ -748,7 +743,7 @@ public class AdminViewController implements Initializable {
 					
 					capacity = capacity - 1;
 					
-					String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`, `ticket_customer`, `ticket_flight`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					String queryInsert = "INSERT INTO `dbo_airline`.`tickets` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `price`, `capacity`, `ticket_customer`, `ticket_flight`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 					pstmt = conn.prepareStatement(queryInsert);
 					pstmt.setString(1, flightNumber);
 					pstmt.setString(2, departureCity);
@@ -759,11 +754,10 @@ public class AdminViewController implements Initializable {
 					pstmt.setString(7, departureTime);
 					pstmt.setDate(8, Date.valueOf(arrivalDate));
 					pstmt.setString(9, arrivalTime);
-					pstmt.setString(10, duration);
-					pstmt.setString(11, price);
-					pstmt.setString(12, "" + capacity);
-					pstmt.setString(13, idCustomer);
-					pstmt.setString(14, "" + idFlight);
+					pstmt.setString(10, price);
+					pstmt.setString(11, "" + capacity);
+					pstmt.setString(12, idCustomer);
+					pstmt.setString(13, "" + idFlight);
 					
 					pstmt.executeUpdate();
 					
@@ -783,8 +777,8 @@ public class AdminViewController implements Initializable {
 			
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
-
+			e.printStackTrace();
+			
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("Select a flight");
@@ -870,7 +864,6 @@ public class AdminViewController implements Initializable {
 		departureTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("departureTime"));
 		arrivalDateColumn.setCellValueFactory(new PropertyValueFactory<Flight, LocalDate>("arrivalDate"));
 		arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("arrivalTime"));
-		durationColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("duration"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("price"));
 		capacityColumn.setCellValueFactory(new PropertyValueFactory<Flight, Integer>("capacity"));
 		

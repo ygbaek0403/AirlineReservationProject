@@ -43,8 +43,6 @@ public class EditFlightController implements Initializable {
 	@FXML
 	private TextField arrivalTimeTF;
 	@FXML
-	private TextField durationTF;
-	@FXML
 	private TextField priceTF;
 	@FXML
 	private TextField capacityTF;
@@ -57,10 +55,10 @@ public class EditFlightController implements Initializable {
 	
 	Alert alert = new Alert(AlertType.INFORMATION);
 
-	AdminViewController avc = new AdminViewController();
+	MainViewController avc = new MainViewController();
 	
 	
-	public void setFlight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String duration, String price, int capacity) {
+	public void setFlight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String price, int capacity) {
 		
 		this.idFlightTF.setText("" + idFlight);
 		this.flightNumberTF.setText(flightNumber);
@@ -72,7 +70,6 @@ public class EditFlightController implements Initializable {
 		this.departureTimeTF.setText(departureTime);
 		this.arrivalDateDP.setValue(arrivalDate);
 		this.arrivalTimeTF.setText(arrivalTime);
-		this.durationTF.setText(duration);
 		this.priceTF.setText(price);
 		this.capacityTF.setText("" + capacity);
 	}
@@ -90,7 +87,6 @@ public class EditFlightController implements Initializable {
 		String departureTime = departureTimeTF.getText();
 		String arrivalDate = arrivalDateDP.getValue().toString();
 		String arrivalTime = arrivalTimeTF.getText();
-		String duration = durationTF.getText();
 		String price = priceTF.getText();
 		String capacity = capacityTF.getText();
 		
@@ -102,7 +98,7 @@ public class EditFlightController implements Initializable {
 			
 			
 			
-			if (departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || duration.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
+			if (departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
 				
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText(null);
@@ -111,7 +107,7 @@ public class EditFlightController implements Initializable {
 				
 			} else {
 		
-				String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `departureCity`= ?, `departureState`= ?, `arrivalCity`= ?, `arrivalState`= ?, `departureDate`= ?, `departureTime`= ?, `arrivalDate`= ?, `arrivalTime`= ?, `duration`= ?, `price`= ?, `capacity`= ? WHERE `idflight`= ?";
+				String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `departureCity`= ?, `departureState`= ?, `arrivalCity`= ?, `arrivalState`= ?, `departureDate`= ?, `departureTime`= ?, `arrivalDate`= ?, `arrivalTime`= ?, `price`= ?, `capacity`= ? WHERE `idflight`= ?";
 				pstmt = conn.prepareStatement(queryUpdate);
 				pstmt.setString(1, departureCity);
 				pstmt.setString(2, departureState);
@@ -121,10 +117,9 @@ public class EditFlightController implements Initializable {
 				pstmt.setString(6, departureTime);
 				pstmt.setString(7, arrivalDate);
 				pstmt.setString(8, arrivalTime);
-				pstmt.setString(9, duration);
-				pstmt.setString(10, price);
-				pstmt.setString(11, capacity);
-				pstmt.setString(12, idFlight);
+				pstmt.setString(9, price);
+				pstmt.setString(10, capacity);
+				pstmt.setString(11, idFlight);
 			
 				pstmt.executeUpdate();
 				

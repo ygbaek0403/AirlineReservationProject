@@ -35,8 +35,6 @@ public class AddFlightController {
 	@FXML
 	private TextField arrivalTimeTF;
 	@FXML
-	private TextField durationTF;
-	@FXML
 	private TextField priceTF;
 	@FXML
 	private TextField capacityTF;
@@ -63,7 +61,6 @@ public class AddFlightController {
 		String departureTime = departureTimeTF.getText();
 		String arrivalDate = arrivalDateDP.getValue().toString();
 		String arrivalTime = arrivalTimeTF.getText();
-		String duration = durationTF.getText();
 		String price = priceTF.getText();
 		String capacity = capacityTF.getText();
 		
@@ -79,16 +76,22 @@ public class AddFlightController {
 			
 			if(isDuplicate(rs, flightNumber) == false) {
 				
-				if (flightNumber.isEmpty() || departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || duration.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
+				if (flightNumber.isEmpty() || departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
 					
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Check your fields.");
 					alert.showAndWait();
 					
+				} else if (departureDateDP.getValue().isBefore(arrivalDateDP.getValue()) ) {
+					
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Date your fields.");
+					alert.showAndWait();
 				} else {
 			
-					String queryInsert = "INSERT INTO `dbo_airline`.`flights` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `duration`, `price`, `capacity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					String queryInsert = "INSERT INTO `dbo_airline`.`flights` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `price`, `capacity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 					pstmt = conn.prepareStatement(queryInsert);
 					pstmt.setString(1, flightNumber);
 					pstmt.setString(2, departureCity);
@@ -99,9 +102,8 @@ public class AddFlightController {
 					pstmt.setString(7, departureTime);
 					pstmt.setString(8, arrivalDate);
 					pstmt.setString(9, arrivalTime);
-					pstmt.setString(10, duration);
-					pstmt.setString(11, price);
-					pstmt.setString(12, capacity);
+					pstmt.setString(10, price);
+					pstmt.setString(11, capacity);
 				
 					pstmt.executeUpdate();
 					

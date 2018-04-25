@@ -56,17 +56,11 @@ public class MyTripsController implements Initializable {
 	@FXML
 	private TableColumn<Ticket, String> arrivalTimeColumn;
 	@FXML
-	private TableColumn<Ticket, String> durationColumn;
-	@FXML
 	private TableColumn<Ticket, String> priceColumn;
 
 	private PreparedStatement pstmt;
-	private PreparedStatement pstmt2;
 
 	Alert alert = new Alert(AlertType.INFORMATION);
-
-	private static Stage primaryStage;
-	private static BorderPane mainLayout;
 	
 	private String url = "jdbc:mysql://localhost:3306/dbo_airline?useSSL=false";
 	private String id = "root";
@@ -74,10 +68,31 @@ public class MyTripsController implements Initializable {
 	
 
 	@FXML
-	private void goBack() {
+	private void goBack() throws SQLException {
+		
+		Connection conn = null;
+
 		
 		try {
-			Main.showAdminView();
+			
+			int idCustomer = LoginController.getIdCustomer();
+			conn = DriverManager.getConnection(url, id, pw);
+			String query = "SELECT isAdmin FROM customers WHERE idcustomer = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "" + idCustomer);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			if (rs.getInt("isAdmin") == 0) {
+			
+				Main.showAdminView();
+				
+			} else {
+				
+				Main.showUserView();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,7 +115,7 @@ public class MyTripsController implements Initializable {
 				
 			while (rs.next()) {
 	            
-				tickets.add(new Ticket(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), rs.getString(12), Integer.parseInt(rs.getString(13)), rs.getString(14), rs.getString(15)));
+				tickets.add(new Ticket(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getDate(7).toString(), rs.getString(8), rs.getDate(9).toString(), rs.getString(10), rs.getString(11), Integer.parseInt(rs.getString(12)), rs.getString(13), rs.getString(14)));
 			}
 
 	        } catch (Exception e) {
@@ -202,7 +217,6 @@ public class MyTripsController implements Initializable {
 		departureTimeColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("departureTime"));
 		arrivalDateColumn.setCellValueFactory(new PropertyValueFactory<Ticket, LocalDate>("arrivalDate"));
 		arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("arrivalTime"));
-		durationColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("duration"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<Ticket, String>("price"));
 				
 		flightTable.setEditable(true);

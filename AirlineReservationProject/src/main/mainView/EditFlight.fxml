@@ -27,7 +27,7 @@
                <children>
                   <Label text="Flight Number:">
                      <HBox.margin>
-                        <Insets right="35.0" />
+                        <Insets right="78.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="ID:">
@@ -35,7 +35,6 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="Capacity:" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -43,17 +42,16 @@
             </HBox>
             <HBox prefHeight="11.0" prefWidth="335.0">
                <children>
-                  <TextField fx:id="flightNumberTF" prefHeight="27.0" prefWidth="130.0">
+                  <TextField fx:id="flightNumberTF" prefHeight="27.0" prefWidth="162.5">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="idFlightTF" prefWidth="50.0">
+                  <TextField fx:id="idFlightTF" prefWidth="162.5">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="capacityTF" minWidth="162.5" prefHeight="27.0" prefWidth="0.0" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" />
@@ -165,9 +163,9 @@
             </HBox>
             <HBox prefHeight="3.0" prefWidth="335.0">
                <children>
-                  <Label text="Duration:">
+                  <Label text="Capacity:">
                      <HBox.margin>
-                        <Insets right="117.0" />
+                        <Insets right="115.0" />
                      </HBox.margin>
                   </Label>
                   <Label text="Price:" />
@@ -178,11 +176,10 @@
             </HBox>
             <HBox prefHeight="0.0" prefWidth="335.0">
                <children>
-                  <TextField fx:id="durationTF">
+                  <TextField fx:id="capacityTF" minWidth="162.5" prefHeight="27.0" prefWidth="0.0">
                      <HBox.margin>
                         <Insets right="10.0" />
-                     </HBox.margin>
-                  </TextField>
+                     </HBox.margin></TextField>
                   <TextField fx:id="priceTF" />
                </children>
                <VBox.margin>

@@ -15,14 +15,13 @@ public class Ticket {
 	private SimpleStringProperty departureTime;
 	private SimpleStringProperty arrivalDate;
 	private SimpleStringProperty arrivalTime;
-	private SimpleStringProperty duration;
 	private SimpleStringProperty price;
 	private SimpleIntegerProperty capacity;
 	private SimpleStringProperty ticket_customer;
 	private SimpleStringProperty ticket_flight;
 	
 	
-	public Ticket (int idTicket, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, String departureDate, String departureTime, String arrivalDate, String arrivalTime, String duration, String price, int capacity, String ticket_customer, String ticket_flight) {
+	public Ticket (int idTicket, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, String departureDate, String departureTime, String arrivalDate, String arrivalTime, String price, int capacity, String ticket_customer, String ticket_flight) {
 	
 		this.idTicket = new SimpleIntegerProperty(idTicket);
 		this.flightNumber = new SimpleStringProperty(flightNumber);
@@ -34,7 +33,6 @@ public class Ticket {
 		this.departureTime = new SimpleStringProperty(departureTime);
 		this.arrivalDate = new SimpleStringProperty(arrivalDate);
 		this.arrivalTime = new SimpleStringProperty(arrivalTime);
-		this.duration = new SimpleStringProperty(duration);
 		this.price = new SimpleStringProperty(price);	
 		this.capacity = new SimpleIntegerProperty(capacity);	
 		this.ticket_customer = new SimpleStringProperty(ticket_customer);	
@@ -119,14 +117,6 @@ public class Ticket {
 
 	public void setArrivalTime(SimpleStringProperty arrivalTime) {
 		this.arrivalTime = arrivalTime;
-	}
-
-	public String getDuration() {
-		return duration.get();
-	}
-
-	public void setDuration(SimpleStringProperty duration) {
-		this.duration = duration;
 	}
 
 	public String getPrice() {

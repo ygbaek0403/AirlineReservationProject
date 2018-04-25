@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainView.MyTripsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainView.MyTripsController">
    <top>
       <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -35,17 +35,16 @@
             </Label>
             <TableView fx:id="flightTable" prefHeight="480.0" prefWidth="784.0">
               <columns>
-                  <TableColumn fx:id="idTicketColumn" prefWidth="30.0" text="ID" />
+                  <TableColumn fx:id="idTicketColumn" prefWidth="40.0" text="ID" />
                   <TableColumn fx:id="flightNumberColumn" prefWidth="50.0" text="Flight" />
                   <TableColumn fx:id="departureCityColumn" prefWidth="100.0" text="Departure City" />
                   <TableColumn fx:id="departureStateColumn" prefWidth="50.0" text="State" />
                   <TableColumn fx:id="arrivalCityColumn" prefWidth="100.0" text="Arrival City" />
                   <TableColumn fx:id="arrivalStateColumn" minWidth="0.0" prefWidth="50.0" text="State" />
                   <TableColumn fx:id="departureDateColumn" minWidth="4.0" prefWidth="105.0" text="Departure Date" />
-                  <TableColumn fx:id="departureTimeColumn" minWidth="4.0" prefWidth="61.0" text="Time" />
+                  <TableColumn fx:id="departureTimeColumn" minWidth="80.0" text="Time" />
                   <TableColumn fx:id="arrivalDateColumn" minWidth="0.0" prefWidth="105.0" text="Arrival Date" />
-                  <TableColumn fx:id="arrivalTimeColumn" minWidth="0.0" prefWidth="61.0" text="Time" />
-                  <TableColumn fx:id="durationColumn" minWidth="9.0" prefWidth="60.0" text="Duration" />
+                  <TableColumn fx:id="arrivalTimeColumn" minWidth="80.0" text="Time" />
                   <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="60.0" text="Price" />
               </columns>
                <VBox.margin>

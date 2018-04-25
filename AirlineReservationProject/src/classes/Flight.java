@@ -17,12 +17,11 @@ public class Flight {
 	private SimpleStringProperty departureTime;
 	private LocalDate arrivalDate;
 	private SimpleStringProperty arrivalTime;
-	private SimpleStringProperty duration;
 	private SimpleStringProperty price;
 	private SimpleIntegerProperty capacity;
 	
 	
-	public Flight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String duration, String price, int capacity) {
+	public Flight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String price, int capacity) {
 	
 		this.idFlight = new SimpleIntegerProperty(idFlight);
 		this.flightNumber = new SimpleStringProperty(flightNumber);
@@ -34,7 +33,6 @@ public class Flight {
 		this.departureTime = new SimpleStringProperty(departureTime);
 		this.arrivalDate = arrivalDate;
 		this.arrivalTime = new SimpleStringProperty(arrivalTime);
-		this.duration = new SimpleStringProperty(duration);
 		this.price = new SimpleStringProperty(price);	
 		this.capacity = new SimpleIntegerProperty(capacity);		
 	}
@@ -117,14 +115,6 @@ public class Flight {
 
 	public void setArrivalTime(SimpleStringProperty arrivalTime) {
 		this.arrivalTime = arrivalTime;
-	}
-
-	public String getDuration() {
-		return duration.get();
-	}
-
-	public void setDuration(SimpleStringProperty duration) {
-		this.duration = duration;
 	}
 
 	public String getPrice() {
