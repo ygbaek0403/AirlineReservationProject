@@ -1,7 +1,5 @@
 package main;
 	
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.IOException;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -18,19 +16,21 @@ public class Main extends Application {
 	private static Stage primaryStage;
 	private static BorderPane mainLayout;
 
-
+	// create splash screen obj
 	SplashScreenController spashScreen = new SplashScreenController();
 
 
     @Override
     public void start(Stage primaryStage) {
+    	
     	Main.primaryStage = primaryStage;
     	Main.primaryStage.setTitle("Airline Reservation Application");
     	
-	
+    	//call splash screen method
     	spashScreen.showWindow();
 
-    	PauseTransition splashScreenDelay = new PauseTransition(Duration.seconds(1));
+    	//it delays 3 seconds for splash screen
+    	PauseTransition splashScreenDelay = new PauseTransition(Duration.seconds(3));
     	splashScreenDelay.setOnFinished(f -> {
     		primaryStage.show();
     		spashScreen.hideWindow();
@@ -55,6 +55,7 @@ public class Main extends Application {
     	mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
     	primaryStage.setScene(scene);
+    	primaryStage.setTitle("Airline reservation system");
     	primaryStage.centerOnScreen();
     	
     }
@@ -66,6 +67,7 @@ public class Main extends Application {
 		mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
     	primaryStage.setScene(scene);
+    	primaryStage.setTitle("Airline reservation system");
     	primaryStage.centerOnScreen();
     	
     }
@@ -77,6 +79,7 @@ public class Main extends Application {
 		mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
     	primaryStage.setScene(scene);
+    	primaryStage.setTitle("Airline reservation system");
     	primaryStage.centerOnScreen();
     	
     }
@@ -88,6 +91,7 @@ public class Main extends Application {
     	mainLayout = loader.load();
     	Scene scene = new Scene(mainLayout);
     	primaryStage.setScene(scene);
+    	primaryStage.setTitle("My trip");
     	primaryStage.centerOnScreen();
     	
     }

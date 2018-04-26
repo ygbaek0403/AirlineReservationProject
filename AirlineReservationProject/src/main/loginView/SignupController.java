@@ -9,7 +9,7 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.sql.*;  
 
-public class SignupController {
+public class SignupController extends LoginController {
 
 	private PreparedStatement pstmt;
 	@FXML

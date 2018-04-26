@@ -18,8 +18,6 @@ public class Customer implements Comparable<Customer> {
 	private String securityQue;
 	private String securityAns;
 	
-	
-	// Generics --> shifts the issue from runtime to compile time
 	ArrayList<Customer> list = new ArrayList<Customer>();
 	
 	

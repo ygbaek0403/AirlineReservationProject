@@ -73,7 +73,6 @@ public class MainViewController implements Initializable {
 	@FXML
 	private DatePicker arrivalDateDP;
 	
-	private static int idFlight;
 	  
 	private PreparedStatement pstmt;
 	
@@ -95,6 +94,7 @@ public class MainViewController implements Initializable {
 		return flightTable.getSelectionModel().getSelectedItem();
 	}
 	
+	//if return flights in table
     public ObservableList<Flight> getFlights() throws SQLException {
 
     	String query = "select * from flights";
@@ -128,6 +128,8 @@ public class MainViewController implements Initializable {
 
     }
 	
+    
+    //it allows to search flight by each criteria
 	@FXML
 	private void goSearch() throws SQLException {
 		 
@@ -577,6 +579,7 @@ public class MainViewController implements Initializable {
 		
 			Parent p = loader.getRoot();
 			Stage stage = new Stage();
+			stage.setTitle("Edit a flight");
 			stage.setScene(new Scene(p));
 			stage.showAndWait();
 			
@@ -597,6 +600,7 @@ public class MainViewController implements Initializable {
 		initialize(null, null);
 	}
 	
+	//delete flights
 	@FXML
 	private void deleteFlight() throws SQLException {
 	
@@ -606,6 +610,7 @@ public class MainViewController implements Initializable {
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			
+			//gives warning about deleting
 			alertConfirmation.setTitle("Confirmation Dialog");
 			alertConfirmation.setHeaderText(null);
 			alertConfirmation.setContentText("Are you sure to delete? \nIt will affect to customer's tickes");
@@ -648,12 +653,15 @@ public class MainViewController implements Initializable {
 		initialize(null, null);
 	}
 	
+	
+	//call method to display my trip screen
 	@FXML
 	private void goToTrip() throws IOException {
 		
 		Main.showMyTrip();
 	}
 	
+	//call login screen
 	@FXML
 	private void goLogout() throws IOException {
        
@@ -661,6 +669,7 @@ public class MainViewController implements Initializable {
 	}
 	
 
+	//add to my trip method
 	@FXML
 	private void addToTrip() throws SQLException {
 		
@@ -692,6 +701,7 @@ public class MainViewController implements Initializable {
 			
 			ResultSet rs = pstmt.executeQuery();
 			
+			//check if flight duplicate
 			if (isFlightDuplicate(rs, idFlight) == false) {
 				
 				if (capacity == 0) {
@@ -701,6 +711,7 @@ public class MainViewController implements Initializable {
 					alert.setContentText("The flight is already full");
 					alert.showAndWait();
 				
+				//check if date is duplicate
 				} else if (isDateDuplicate()) {
 					
 					alert.setTitle("Information Dialog");
@@ -728,6 +739,7 @@ public class MainViewController implements Initializable {
 					
 					pstmt.executeUpdate();
 					
+					//it reduce capacity when added a flight
 					String queryUpdate = "UPDATE `dbo_airline`.`flights` SET `capacity`= ? WHERE `idflight`= ?";
 					pstmt = conn.prepareStatement(queryUpdate);
 					pstmt.setString(1, "" + capacity);
@@ -791,7 +803,7 @@ public class MainViewController implements Initializable {
 		initialize(null, null);
 	}
 	
-
+	//check if date is duplicate
 	public boolean isDateDuplicate() {
 		
 		try {
@@ -825,7 +837,11 @@ public class MainViewController implements Initializable {
 	}
 	
 
-	public boolean isFlightDuplicate(ResultSet rs, int idFlight) {
+	//check if idFlight is duplicate
+	//polymorphysm
+	public boolean isFlightDuplicate(Object o, int idFlight) {
+		
+		ResultSet rs = (ResultSet) o;
 		
 		try {
 			
@@ -867,12 +883,14 @@ public class MainViewController implements Initializable {
 		priceColumn.setCellValueFactory(new PropertyValueFactory<Flight, String>("price"));
 		capacityColumn.setCellValueFactory(new PropertyValueFactory<Flight, Integer>("capacity"));
 		
+		//table editable
 		flightTable.setEditable(true);
 
+		//set flights
 		try {
 			flightTable.setItems(getFlights());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

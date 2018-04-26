@@ -10,28 +10,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
 import classes.Ticket;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import main.Main;
 import main.loginView.LoginController;
 
-public class MyTripsController implements Initializable {
+public class MyTripsController extends MainViewController implements Initializable {
 
 	@FXML
 	private TableView<Ticket> flightTable;
@@ -67,6 +59,7 @@ public class MyTripsController implements Initializable {
 	private String pw = "iin";
 	
 
+	//call method to display main screen
 	@FXML
 	private void goBack() throws SQLException {
 		
@@ -85,20 +78,23 @@ public class MyTripsController implements Initializable {
 			
 			rs.next();
 			
+			//if isadmin is 0, display admin view
 			if (rs.getInt("isAdmin") == 0) {
 			
 				Main.showAdminView();
 				
+			//if isadmin is not 0, display user view
 			} else {
 				
 				Main.showUserView();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 	
+	//get ticket from table
     public ObservableList<Ticket> getFlights(String query) throws SQLException {
 		
     	
@@ -131,6 +127,7 @@ public class MyTripsController implements Initializable {
 
     }
 	
+    //allows to delete a flight
 	@FXML
 	private void goDelete() throws SQLException {
 		
@@ -170,6 +167,8 @@ public class MyTripsController implements Initializable {
 		}
 	}
 
+	
+	//if delete a flight, it add a capacity to the flight
 	private void addCapacity() {
 		
 	Connection conn = null;

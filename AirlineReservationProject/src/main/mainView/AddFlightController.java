@@ -14,7 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
 
 
-public class AddFlightController {
+public class AddFlightController extends MainViewController {
 
 	@FXML
 	private TextField flightNumberTF;
@@ -48,25 +48,26 @@ public class AddFlightController {
 	Alert alert = new Alert(AlertType.INFORMATION);
 
 	
+	//to add a flight in admin view
 	@FXML
 	private void goSubmit() throws IOException, SQLException {
-		
-		
-		String flightNumber = flightNumberTF.getText();
-		String departureCity = departureCityTF.getText();
-		String departureState = departureStateTF.getText();
-		String arrivalCity = arrivalCityTF.getText();
-		String arrivalState = arrivalStateTF.getText();
-		String departureDate = departureDateDP.getValue().toString();
-		String departureTime = departureTimeTF.getText();
-		String arrivalDate = arrivalDateDP.getValue().toString();
-		String arrivalTime = arrivalTimeTF.getText();
-		String price = priceTF.getText();
-		String capacity = capacityTF.getText();
-		
+				
 		Connection conn = null;
 		
 		try {
+			
+			String flightNumber = flightNumberTF.getText();
+			String departureCity = departureCityTF.getText();
+			String departureState = departureStateTF.getText();
+			String arrivalCity = arrivalCityTF.getText();
+			String arrivalState = arrivalStateTF.getText();
+			String departureDate = departureDateDP.getValue().toString();
+			String departureTime = departureTimeTF.getText();
+			String arrivalDate = arrivalDateDP.getValue().toString();
+			String arrivalTime = arrivalTimeTF.getText();
+			String price = priceTF.getText();
+			String capacity = capacityTF.getText();
+			
 			
 			conn = DriverManager.getConnection(url, id, pw);
 			

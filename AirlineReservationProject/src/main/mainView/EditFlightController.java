@@ -7,11 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
-import classes.Flight;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -20,7 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
 
 
-public class EditFlightController implements Initializable {
+public class EditFlightController extends MainViewController implements Initializable {
 	
 	@FXML
 	private TextField idFlightTF;

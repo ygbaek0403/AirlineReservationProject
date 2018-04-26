@@ -33,6 +33,8 @@ public class LoginController {
 	private String id = "root";
 	private String pw = "iin";
 	
+	
+	//it compares id and pw and isadmin to check whether the id is for admin or user
 	@FXML
 	private void goLogin() throws IOException, SQLException {
 		
@@ -53,12 +55,14 @@ public class LoginController {
 			
 			rs.next();
 			
+			//if idadmin is 0, display admin view
 			if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 0) {
 		
 				idCustomer = Integer.parseInt(rs.getString(1));
 				
 				Main.showAdminView();
 				
+			//if idadmin is 1, display user view
 			} else if (username.equals(rs.getString("username")) && password.equals(rs.getString("password")) && rs.getInt("isAdmin") == 1) {
 				
 				idCustomer = Integer.parseInt(rs.getString(1));
