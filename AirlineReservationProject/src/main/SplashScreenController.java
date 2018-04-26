@@ -14,10 +14,11 @@ public class SplashScreenController extends StackPane {
     @FXML
     private ImageView imageView;
 
- 
+    //define new stage
     Stage window = new Stage();
 
   
+    //define constructor
     public SplashScreenController() {
 
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("SplashScreen.fxml"));

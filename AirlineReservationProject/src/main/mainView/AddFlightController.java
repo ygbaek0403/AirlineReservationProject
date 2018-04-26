@@ -75,8 +75,10 @@ public class AddFlightController extends MainViewController {
 			String query = "select flightNumber from flights";
 			ResultSet rs = stmt.executeQuery(query);
 			
+			//check if duplicated
 			if(isDuplicate(rs, flightNumber) == false) {
 				
+				//check if empty for textfileds
 				if (flightNumber.isEmpty() || departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
 					
 					alert.setTitle("Information Dialog");
@@ -84,12 +86,6 @@ public class AddFlightController extends MainViewController {
 					alert.setContentText("Check your fields.");
 					alert.showAndWait();
 					
-				} else if (departureDateDP.getValue().isBefore(arrivalDateDP.getValue()) ) {
-					
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText(null);
-					alert.setContentText("Date your fields.");
-					alert.showAndWait();
 				} else {
 			
 					String queryInsert = "INSERT INTO `dbo_airline`.`flights` (`flightNumber`, `departureCity`, `departureState`, `arrivalCity`, `arrivalState`, `departureDate`, `departureTime`, `arrivalDate`, `arrivalTime`, `price`, `capacity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -133,6 +129,7 @@ public class AddFlightController extends MainViewController {
 		
 	}
 	
+	//check flight number if duplcated
 	public boolean isDuplicate(ResultSet rs, String flightNumber) {
 		
 		try {

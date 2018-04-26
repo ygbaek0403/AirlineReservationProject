@@ -27,6 +27,8 @@ public class FindPasswordController extends LoginController {
 	private String id = "root";
 	private String pw = "iin";
 	
+	
+	//method to display sequrity que into a label
 	@FXML
 	private void goFind() throws IOException, SQLException {
 		
@@ -69,7 +71,7 @@ public class FindPasswordController extends LoginController {
 		}
 	}
     
-
+	//method to check security que and display the password
 	@FXML
 	private void goSubmit() throws IOException, SQLException {
 		

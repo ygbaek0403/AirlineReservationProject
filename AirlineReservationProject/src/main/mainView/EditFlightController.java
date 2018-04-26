@@ -54,7 +54,7 @@ public class EditFlightController extends MainViewController implements Initiali
 
 	MainViewController avc = new MainViewController();
 	
-	
+	//to display selected flight info into textfields
 	public void setFlight(int idFlight, String flightNumber, String departureCity, String departureState, String arrivalCity, String arrivalState, LocalDate departureDate, String departureTime, LocalDate arrivalDate, String arrivalTime, String price, int capacity) {
 		
 		this.idFlightTF.setText("" + idFlight);
@@ -71,6 +71,7 @@ public class EditFlightController extends MainViewController implements Initiali
 		this.capacityTF.setText("" + capacity);
 	}
 	
+	//to submit changes
 	@FXML
 	private void goSubmit() throws IOException, SQLException {
 		
@@ -94,7 +95,7 @@ public class EditFlightController extends MainViewController implements Initiali
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			
-			
+			//check if empty
 			if (departureCity.isEmpty() || departureState.isEmpty() || arrivalCity.isEmpty() || arrivalState.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
 				
 				alert.setTitle("Information Dialog");
@@ -145,6 +146,7 @@ public class EditFlightController extends MainViewController implements Initiali
 		
 	}
 	
+	//check if flightnumber is duplicated
 	public boolean isDuplicate(ResultSet rs, String flightNumber) {
 		
 		try {

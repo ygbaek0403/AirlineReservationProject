@@ -38,6 +38,8 @@ public class Main extends Application {
     	
     	splashScreenDelay.playFromStart();
     	
+    	
+    	//display log view
     	try {
 			showLoginView();
 		} catch (Exception e) {
@@ -47,7 +49,8 @@ public class Main extends Application {
     	
     }
 
-    
+
+    //method to display login view
     public static void showLoginView() throws IOException {
     	
     	FXMLLoader loader = new FXMLLoader();
@@ -60,6 +63,8 @@ public class Main extends Application {
     	
     }
     
+    
+    //method to display admin view
     public static void showAdminView() throws IOException {
     	
     	FXMLLoader loader = new FXMLLoader();
@@ -72,6 +77,8 @@ public class Main extends Application {
     	
     }
     
+    
+    //method to display user view
     public static void showUserView() throws IOException {
     	
     	FXMLLoader loader = new FXMLLoader();
@@ -84,6 +91,8 @@ public class Main extends Application {
     	
     }
     
+    
+    //method to display my trip 
     public static void showMyTrip() throws IOException {
     	
     	FXMLLoader loader = new FXMLLoader();

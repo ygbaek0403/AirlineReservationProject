@@ -41,6 +41,8 @@ public class SignupController extends LoginController {
 	private String id = "root";
 	private String pw = "iin";
 	
+	
+	//it allows to sign up as customer account
 	@FXML
 	private void goSubmit() throws IOException, SQLException {
 		
@@ -66,6 +68,7 @@ public class SignupController extends LoginController {
 			String query = "select username, ssn from customers";
 			ResultSet rs = stmt.executeQuery(query);
 			
+			//check if usrname, ssn and email is duplicate
 			if(isDuplicate(rs, username, ssn, email) == false) {
 				
 				if (username.isEmpty() || password.isEmpty() || ssn.isEmpty() || securityQue.isEmpty() || securityAns.isEmpty()) {
@@ -124,6 +127,7 @@ public class SignupController extends LoginController {
 			
 			while (rs.next()) {
 				
+				//username is duplicate?
 				if (username.equals(rs.getString("username"))) {
 					
 					alert.setTitle("Information Dialog");
@@ -131,7 +135,9 @@ public class SignupController extends LoginController {
 					alert.setContentText("Your username is already exist");
 					alert.showAndWait();
 					return true;
+				
 					
+				//ssn is duplicate?
 				}  else if (ssn.equals(rs.getString("ssn"))) {
 					
 					alert.setTitle("Information Dialog");
@@ -140,6 +146,7 @@ public class SignupController extends LoginController {
 					alert.showAndWait();
 					return true;
 					
+				//ssn has correct form?
 				} else if (!ssn.matches("^\\d{3}-\\d{2}-\\d{4}$")){
 					
 					alert.setTitle("Information Dialog");
@@ -147,7 +154,9 @@ public class SignupController extends LoginController {
 					alert.setContentText("Your ssn form is not correct");
 					alert.showAndWait();
 					return true;
-										
+					
+				
+				//email has correct form?						
 				} else if (!email.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")) {
 					
 					alert.setTitle("Information Dialog");

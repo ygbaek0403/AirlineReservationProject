@@ -94,12 +94,14 @@ public class LoginController {
 		}
 	}
 	
+	//it returns idcustomer for main view controler
 	public static int getIdCustomer() {
 		
 		return idCustomer;
 	}
 	
 	
+	//display sign up screen
 	@FXML
 	private void goSignup() throws IOException {
 		
@@ -117,6 +119,7 @@ public class LoginController {
 	}
 	
 
+	//display find password screen
 	@FXML
 	private void goFindPassword() throws IOException {
 		
